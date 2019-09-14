@@ -7,11 +7,13 @@ script:
   - docker run --mount src=$TRAVIS_BUILD_DIR,target=/usr/src/tex,type=bind dxjoke/tectonic-docker /bin/sh -c "tectonic --reruns 0 presentation.tex; tectonic --reruns 0 talk.tex;"
 
 after_success:
- - mv presentation.pdf presentation-${TRAVIS_TAG}.pdf
- - mv talk.pdf talk-${TRAVIS_TAG}.pdf
+  - mv presentation.pdf presentation-${TRAVIS_TAG}.pdf
+  - mv talk.pdf talk-${TRAVIS_TAG}.pdf
 
 deploy:
   provider: releases
+  api_key:
+    secure: Gqgpx6EsUU+HwCi+DstwcLmj/3xnICydzrd+QTZGCcqE41q0pMmao3ieizmgc1XCkz7CSGo7pYVuisDksijmBKbHEGcHan3GvfS9eYtd85FUAjq3EApsNzrILBjiI+1aeL26MTOhei7BA6d369wrj7M0Jfk/nlbfYNeFzea+9ZKWW63kBsiYGHgWu1ng/h/pKw+civO/Jwu+NmL99w/arM/AGjrsxADaxt5oNcshqOTtKTpxJrIT8YISCFO5O2IPO82gR2dwl5fyiOu9aY4OdjHMbt6VHgoz6Y0icFYVFaupqioA60AIuqdZqWdf1IFr0BNIRVtKJmclUI3xfDibtJSsCK3Bmi09rTA5QC8xTzit7cfTuZSWB6egRmm7EcEVg36SoK7bkHVxOPLn6pouzxctIZYDGA+DBwg8LDd48AxiH9w8o84OjqYnVUdyCsggeTEjDfKQqbxfXv9ojWFn24IgrUl/qXVsbbayT0CrnbD4H+PC9tre0ejYMqe5y89+Li6ajFCDRR5bwtTFzyY3+Nf+4y1ri/5rci7+JvskK9PCVKQpJZj3gZB24bL2da8cyLNK+UaSzbi1k1R7fEdQ11yV2MmP1jgKpZzElggeo3h87m4DlaU0WPYdH1qQO5BPiy+qDbwKJzMrR/rLLZfibD6XE06Nlg4rFtmiCn238GU=
   file: 
     - $TRAVIS_BUILD_DIR/presentation-${TRAVIS_TAG}.pdf
     - $TRAVIS_BUILD_DIR/talk-${TRAVIS_TAG}.pdf
