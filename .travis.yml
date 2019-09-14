@@ -1,0 +1,19 @@
+sudo: required
+language: generic
+services: docker
+
+script:
+  - docker pull dxjoke/tectonic-docker
+  - docker run --mount src=$TRAVIS_BUILD_DIR,target=/usr/src/tex,type=bind dxjoke/tectonic-docker /bin/sh -c "tectonic --reruns 0 thesis.tex;"
+
+after_success:
+ - mv presentation.pdf presentation-${TRAVIS_TAG}.pdf
+
+deploy:
+  provider: releases
+  file: $TRAVIS_BUILD_DIR/presentation-${TRAVIS_TAG}.pdf
+  skip_cleanup: true
+  on:
+    repo: lparolari/bachelor-thesis-presentation
+    tags: true
+
