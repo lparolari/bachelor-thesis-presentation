@@ -286,40 +286,98 @@
 \end{frame}
 
 %------------------------------------------------
-\section{Second Section}
+\section{Picat}
 %------------------------------------------------
 
 \begin{frame}
-\frametitle{Table}
-\begin{table}
-\begin{tabular}{l l l}
-\toprule
-\textbf{Treatments} & \textbf{Response 1} & \textbf{Response 2}\\
-\midrule
-Treatment 1 & 0.0003262 & 0.562 \\
-Treatment 2 & 0.0015681 & 0.910 \\
-Treatment 3 & 0.0009271 & 0.296 \\
-\bottomrule
-\end{tabular}
-\caption{Table caption}
-\end{table}
+  \frametitle{Il linguaggio Picat}
+  \begin{block}{Picat}
+    Picat è un linguaggio di programmazione multiparadigma basato
+    sulla logica dei predicati del primo ordine per applicazioni
+    \emph{general-purpose}.
+  \end{block}
+  \medskip
+  \textbf{Caratteristiche principali}
+  \begin{itemize}
+  \item \textbf{P}attern-matching, predicati e funzioni sono definiti
+    tramite regole di pattern-matching;
+  \item \textbf{I}ntuitive, sono forniti comandi utilizzati nei comuni
+    linguaggi imperativi;
+  \item \textbf{C}onstraints, la programmazione con vincoli è
+    supportata nativamente;
+  \item \textbf{A}ctors, viene fornito il supporto per attori
+    event-driven;
+  \item \textbf{T}abling, è implementato un sistema di caching per
+    memorizzare risultati parziali in modo trasparente.
+  \end{itemize}
 \end{frame}
 
 %------------------------------------------------
 
-\begin{frame}
-\frametitle{Theorem}
-\begin{theorem}[Mass--energy equivalence]
-$E = mc^2$
-\end{theorem}
-\end{frame}
-
-%------------------------------------------------
-
-\begin{frame}[fragile] % Need to use the fragile option when verbatim is used in the slide
-\frametitle{Verbatim}
-\begin{example}[Theorem Slide Code]
+\begin{frame}[fragile]
+  \frametitle{Esempi (1/2)}
+  \begin{exampleblock}{Esempio (Approccio logic programming)}
 \begin{verbatim}
+fib(0,F) => F=1.
+fib(1,F) => F=1.
+fib(N,F),N>1 => fib(N-1,F1), fib(N-2,F2), F=F1+F2.
+fib(N,F) => throw $error(wrong_argument,fib,N).
+\end{verbatim}
+  \end{exampleblock}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}[fragile]
+  \frametitle{Esempi (2/2)}
+  \begin{exampleblock}{Esempio (Approccio imperative programming)}
+\begin{verbatim}
+fib(N,F) =>
+    if (N=0; N=1) then
+        F=1
+    elseif N>1 then
+        fib(N-1,F1),fib(N-2,F2),F=F1+F2
+    else
+        throw $error(wrong_argument,fib,N)
+    end.
+\end{verbatim}
+  \end{exampleblock}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}[fragile]
+  \frametitle{Picat vs. Prolog (1/3)}
+  \begin{exampleblock}{Esempio (Gestione backtracking)}
+\begin{verbatim}
+% Prolog 
+membchk(X,[X|_]) :- !.
+membchk(X,[_|T]) :- membchk(X,T).
+
+% Picat
+membchk(X,[X|_]) => true.
+membchk(X,[_|T]) => membchk(X,T).
+\end{verbatim}
+  \end{exampleblock}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}[fragile]
+  \frametitle{Picat vs. Prolog Esempio (1/2)}
+  \begin{exampleblock}{Esempio (Gestione backtracking)}
+\begin{verbatim}
+% Prolog 
+membchk(X,[X|_]) :- !.
+membchk(X,[_|T]) :- membchk(X,T).
+
+% Picat
+membchk(X,[X|_]) => true.
+membchk(X,[_|T]) => membchk(X,T).
+\end{verbatim}
+  \end{exampleblock}
+\end{frame}
+
 \begin{frame}
 \frametitle{Theorem}
 \begin{theorem}[Mass--energy equivalence]
