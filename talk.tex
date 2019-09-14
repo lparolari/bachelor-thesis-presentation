@@ -39,6 +39,52 @@ del solver tramite i quali è stato possibile risolvere i vincoli. Si
 darà poi un accenno all'utilizzo del solver per concludere con la
 considerazioni finali ed i lavori futuri.
 
+\lset{} è un linguaggio basato su vincoli per esprimere e risolvere
+formule del primo ordine sull'universo degli insiemi finiti. E' stato
+inizialmente concepito come un parte del linguaggio logico basato su
+vincoli (CLP) \clpset{}. Fondamentalmente, \lset{} fornisce una forma
+molto generale di insiemi, letteralmente ``insiemi ibridi finiti
+ereditari non tipizzati'' (mi sono esercitato a casa a dirla in
+inglese, senza successo, di conseguenza ve la propongo in
+italiano). Gli insiemi finiti ereditari possono essere altri inisemi
+finiti ereditari; mentre gli insiemi ibridi sono insiemi i cui
+elementi possono essere oggetti di tipo non insiemistico. L'utilizzo
+combinato di queste due categorie di insiemi da vita ad una forma
+molto generale di insieme, dove uno o più elementi dell'insieme
+possono essere variabili. Questi insiemi sono manipolati dagli usuali
+operatori su insiemi (come ad esempio l'eguaglianza tra insiemi,
+appartenza, unione, eccetera) che sono forniti sottoforma di
+vincoli. Più in particolare, l'uguaglianza tra insiemi è implementata
+con l'unificazione insiemistica, mentre il soddisfacimento dei vincoli
+è verificato da un solver completo tramite una procedura di decisione
+per formule di \lset{} (questo solver è appunto l'oggetto oggetto di
+questo lavoro).
+
+Vediamo rapidamente la sintassi di questo linguaggio: possiamo notare
+che è denotata da insiemi piuttosto semplici, abbiamo un insieme
+finito $\calF$ di costanti e di simboli di funzione non interpretati
+come $1, a, f(1,2), ...$, l'insieme dei predicati come appunto $=$,
+unione, disgiunzione... e l'insieme delle variabili $\calV$.
+
+La semantica invece è piuttosto intuitiva: abbiamo l'insieme vuoto, il
+costruttore di insiemi che ci permette appunto di creare insiemi da un
+singoletto $t$ unito ad un resto $s$ e i predicati con relativa
+semantica.
+
+Il linguaggio consente di combinare gli insiemi precedentemente
+mostrati in termini, vincoli o formule. Di particolare importanza sono
+le formule, che non sono altro che congiunzioni o disgiunzioni di
+termini e vincoli.
+
+Lo pseudocodice mostrato in figura è la procedure di risoluzione per
+vincoli insiemistici adottata dal solver. Questa procedura sfrutta
+principalente tre sotto procedure: la più importante è STEP, ovvero la
+procedura che applica le regole di riscrittura ai vincoli generandone
+di nuovi, possibilemnte più semplici dei precedenti.  Come evidenziato
+dai test dei cicli, la procedura termina quando viene raggiunto un
+punto fisso, ovvero non è più possibile trovare nuovi vincoli più
+semplici dei precedenti.
+
 TODO
 
 \end{document}
