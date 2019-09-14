@@ -17,6 +17,11 @@
 *.fdb*
 *.fls
 
+### latex aux presentation files
+*.nav
+*.vrb
+*.snm
+
 ### others latex
 *.run.xml
 *.bak
