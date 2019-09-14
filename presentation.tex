@@ -113,18 +113,28 @@
 
 %-------------------------------------------------------------------
 %	TITLE PAGE
-%----------------------------------------------------------------------------------------
+%-------------------------------------------------------------------
 
-\title[Short title]{Full Title of the Talk} % The short title appears at the bottom of every slide, the full title is only on the title page
+% The short title appears at the bottom of every slide, 
+% the full title is only on the title page
+\title[
+	\lset{} in Picat
+]{
+	Progettazione e implementazione
+	in Picat di un risolutore per vincoli insiemistici}
 
-\author{John Smith} % Your name
-\institute[UCLA] % Your institution as it will appear on the bottom of every slide, may be shorthand to save space
-{
-University of California \\ % Your institution for the title page
-\medskip
-\textit{john@smith.com} % Your email address
+\author[Luca \textsc{Parolari}]{
+\textit{Candidato:} Luca \textsc{Parolari} \\
+\textit{Relatore:} Gianfranco \textsc{Rossi}
 }
-\date{\today} % Date, can be changed to a custom date
+\institute[UNIPR]
+{
+	Università di Parma \\
+	Dipartimento di Scienze Matematiche Fisiche e Informatiche \\
+	Corso di Laurea in Informatica
+}
+\date{26 settembre 2019}
+
 
 \begin{document}
 
@@ -133,8 +143,14 @@ University of California \\ % Your institution for the title page
 \end{frame}
 
 \begin{frame}
-\frametitle{Overview} % Table of contents slide, comment this block out to remove it
-\tableofcontents % Throughout your presentation, if you choose to use \section{} and \subsection{} commands, these will automatically be printed on this slide as an overview of your presentation
+\frametitle{Panoramica della presentazione}
+%%% manual toc
+%\begin{itemize}
+%	\item Il linguaggio \lset{}
+%\end{itemize}
+
+%%% automatic toc
+\tableofcontents
 \end{frame}
 
 %----------------------------------------------------------------------------------------
@@ -283,9 +299,9 @@ This statement requires citation \cite{p1}.
 %------------------------------------------------
 
 \begin{frame}
-\Huge{\centerline{The End}}
+  \Huge{\centerline{Grazie per l'attenzione}}
 \end{frame}
 
-%----------------------------------------------------------------------------------------
+%-------------------------------------------------------------------
 
-\end{document} 
+\end{document}
