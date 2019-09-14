@@ -11,17 +11,32 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%----------------------------------------------------------------------------------------
-%	PACKAGES AND THEMES
-%----------------------------------------------------------------------------------------
-
 \documentclass{beamer}
 
-\mode<presentation> {
+%-------------------------------------------------------------------
+%	PACKAGES AND THEMES
+%-------------------------------------------------------------------
 
+%%% PACKAGES
+\usepackage[utf8]{inputenc}  % italian symbols.
+\usepackage[T1]{fontenc}     % define T1 charset for out files.
+\usepackage[italian]{babel}  % italian latex typo conventions.
+\usepackage{csquotes}        % needed by babel.
+\usepackage{amsmath}         % math features.
+\usepackage{amsthm}          % math theorems.
+\usepackage{amssymb}         % math symbols.
+\usepackage{graphicx}        % images managing.
+\usepackage{booktabs}        % Allows the use of \toprule, \midrule and \bottomrule in tables
+\usepackage{algorithm}       % algorithm block.
+\usepackage{algcompatible}
+\usepackage{algpseudocode}   % style for (autoimported) package algorithmicx.
+
+%%% MODE
+\mode<presentation> {
 % The Beamer class comes with a number of default slide themes
-% which change the colors and layouts of slides. Below this is a list
-% of all the themes, uncomment each in turn to see what they look like.
+% which change the colors and layouts of slides. Below this is a
+% list of all the themes, uncomment each in turn to see what they
+% look like.
 
 %\usetheme{default}
 %\usetheme{AnnArbor}
@@ -29,17 +44,17 @@
 %\usetheme{Bergen}        % commented left
 %\usetheme{Berkeley}      % menu left
 %\usetheme{Berlin}
-%\usetheme{Boadilla}      % very nice
-%\usetheme{CambridgeUS}
+%\usetheme{Boadilla}      % nice, no top menu
+%\usetheme{CambridgeUS}   % nice menu and footer
 %\usetheme{Copenhagen}
 %\usetheme{Darmstadt}
 %\usetheme{Dresden}
-%\usetheme{Frankfurt}     % NB
-%\usetheme{Goettingen}
-%\usetheme{Hannover}
-%\usetheme{Ilmenau}
-%\usetheme{JuanLesPins}
-%\usetheme{Luebeck}
+%\usetheme{Frankfurt}     % top bullets, no info below
+%\usetheme{Goettingen}    % no
+%\usetheme{Hannover}      % no
+%\usetheme{Ilmenau}       % not bad: bullets, sections, ... but too many rows
+%\usetheme{JuanLesPins}   % tree menu
+%\usetheme{Luebeck}       % very nice menu
 \usetheme{Madrid}        % default
 %\usetheme{Malmoe}
 %\usetheme{Marburg}
@@ -47,7 +62,7 @@
 %\usetheme{PaloAlto}
 %\usetheme{Pittsburgh}    % clean
 %\usetheme{Rochester}
-%\usetheme{Singapore}      % not bad, no info below
+%\usetheme{Singapore}     % not bad, no info below
 %\usetheme{Szeged}
 %\usetheme{Warsaw}
 
@@ -64,22 +79,39 @@
 %\usecolortheme{fly}           % horrible
 %\usecolortheme{lily}          % nice, clean blue
 %\usecolortheme{orchid}        % like default
-%\usecolortheme{rose}          % like default
+%\usecolortheme{rose}          % like default, very good
 %\usecolortheme{seagull}       % grey
 %\usecolortheme{seahorse}      % light lavanda
 %\usecolortheme{whale}         % like default
 %\usecolortheme{wolverine}     % yello blue
 
-%\setbeamertemplate{footline} % To remove the footer line in all slides uncomment this line
-%\setbeamertemplate{footline}[page number] % To replace the footer line in all slides with a simple slide count uncomment this line
+% To remove the footer line in all slides uncomment this line
+%\setbeamertemplate{footline}
 
-%\setbeamertemplate{navigation symbols}{} % To remove the navigation symbols from the bottom of all slides uncomment this line
-}
+% To replace the footer line in all slides with a simple slide 
+% count uncomment this line
+%\setbeamertemplate{footline}[page number]
 
-\usepackage{graphicx} % Allows including images
-\usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables
+% To remove the navigation symbols from the bottom of all 
+% slides uncomment this line
+\setbeamertemplate{navigation symbols}{} 
 
-%----------------------------------------------------------------------------------------
+% blocks
+%\setbeamertemplate{blocks}[rounded][shadow=true]
+
+} % /mode<presentation>
+
+% top menu
+\useoutertheme[subsection=false]{miniframes}
+
+%\setbeamercolor{block title}{use=structure,fg=white,bg=blue!75!black}
+%\setbeamercolor{block body}{use=structure,fg=black,bg=white!20!white}
+
+%%% CONFIGURATIONS
+\input{macros}
+
+
+%-------------------------------------------------------------------
 %	TITLE PAGE
 %----------------------------------------------------------------------------------------
 
