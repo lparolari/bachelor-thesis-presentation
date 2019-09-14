@@ -4,7 +4,7 @@ services: docker
 
 script:
   - docker pull dxjoke/tectonic-docker
-  - docker run --mount src=$TRAVIS_BUILD_DIR,target=/usr/src/tex,type=bind dxjoke/tectonic-docker /bin/sh -c "tectonic --keep-intermediates --reruns 1 presentation.tex; tectonic --reruns 0 talk.tex;"
+  - docker run --mount src=$TRAVIS_BUILD_DIR,target=/usr/src/tex,type=bind dxjoke/tectonic-docker /bin/sh -c "tectonic --keep-intermediates --reruns 0 presentation.tex; tectonic --reruns 0 presentation.tex; tectonic --reruns 0 talk.tex;"
 
 after_success:
   - mv presentation.pdf presentation-${TRAVIS_TAG}.pdf
