@@ -170,6 +170,19 @@ dato. Di fatto rule/2 si comporta come uno switch sul primo argomento,
 le relative regole di riscrittura sono eseguite ed il risultato è
 messo in R, che ritorna poi a solve/2.
 
+L'implementazione del solver è stata possibile grazie alle regole di
+riscrittura. Una regola di riscrittura spesso consente di riscrivere
+un vincolo in una forma più semplice. Tramite questo meccanismo il
+risolutore è in grado di giungere alla soluzione. Ogni vincolp ha il
+suo set di regole, nella slide è riportata la regola di riscrittura 2
+per il vincolo di uguaglianza. E' una regola molto semplice e permette
+di riscrivere un vincolo della forma $t = \dotx$ in $\dotx =
+t$. Vediamo quindi l'implementazione di questa semplice regola in
+Picat: il predicato eq implementa le regole di riscrittura per vincoli
+di uguaglianza e la regola eq 2 è selezionata tramite le condizioni di
+applicabilità come nonvar(T1) var(T2). Nella risultato R viene messa
+la riscrittura del vincolo.
+
 TODO
 
 \end{document}

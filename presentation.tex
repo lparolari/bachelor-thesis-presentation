@@ -550,12 +550,47 @@ rule(union(S1, S2, S3), R) => union(S1, S2, S3, R).
 \end{frame}
 
 %------------------------------------------------
-\section{Regole di riscrittura}
+\section{Implementazione}
 %------------------------------------------------
 
 \begin{frame}
-	\frametitle{Regole di riscrittura}
-	TODO
+  \frametitle{Regole di riscrittura}
+  \begin{block}{Definizione (Regola di riscrittura)}
+    Se $\pi$ è un simbolo di $\prod$ e $\Phi$ è un \lset{}-\textit{constraint} basato su $\pi$, allora una \emph{regola di riscrittura per $\pi$-constraint} è una regola della forma $\Phi \to \Phi_1 \lor \ldots \lor \Phi_n$, dove $\Phi_i, i \geq 1$ sono \lset{}-formule.
+  \end{block}
+  \begin{exampleblock}{Esempio (Regola $=_2$)}
+  	\[ \text{Se }t \not\in \calV, t = \dotx \to \dotx = t \]
+  	
+  	il cui risultato pratico è quello di invertire un termine variabile con uno non variabile qualora non siano ``orientati'' correttamente, in pratica:
+  	
+    \[ 1 = X \to X = 1 \]
+  \end{exampleblock}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}[fragile]
+  \frametitle{Implementazione}
+  L'implementazione in Picat è semplice e molto vicina alla descrizione matematica
+  \begin{columns}[c]
+  	\column{0.45\textwidth}
+  	\begin{exampleblock}{Esempio (Desc. matematica)}
+  	  Regola $=_2$:
+  	  \[
+  	    \text{Se }t \not\in \calV, t = \dotx \to \dotx = t 
+  	  \]
+  	\end{exampleblock}
+  
+  	\column{0.45\textwidth}
+  	\begin{exampleblock}{Esempio (Implementazione)}
+\begin{verbatim}
+eq(T1, T2, R), 
+        nonvar(T1),
+        var(T2) =>      % 2
+    R = [ $eq(T2, T1) ].
+\end{verbatim}
+  	\end{exampleblock}
+  \end{columns}
 \end{frame}
 
 %------------------------------------------------
