@@ -85,6 +85,8 @@
 %\usecolortheme{whale}         % like default
 %\usecolortheme{wolverine}     % yello blue
 
+\usefonttheme{professionalfonts}
+
 % To remove the footer line in all slides uncomment this line
 %\setbeamertemplate{footline}
 
@@ -107,6 +109,9 @@
 %\setbeamercolor{block title}{use=structure,fg=white,bg=blue!75!black}
 %\setbeamercolor{block body}{use=structure,fg=black,bg=white!20!white}
 
+% step by step
+\setbeamercovered{transparent}
+
 %%% CONFIGURATIONS
 \input{macros}
 
@@ -127,6 +132,7 @@
 \textit{Candidato:} Luca \textsc{Parolari} \\
 \textit{Relatore:} Gianfranco \textsc{Rossi}
 }
+
 \institute[UNIPR]
 {
 	Università di Parma \\
@@ -307,8 +313,8 @@
     supportata nativamente;
   \item \textbf{A}ctors, viene fornito il supporto per attori
     event-driven;
-  \item \textbf{T}abling, è implementato un sistema di caching per
-    memorizzare risultati parziali in modo trasparente.
+  \item \textbf{T}abling, viene fornito un sistema di caching per
+    la memorizzazione di risultati parziali.
   \end{itemize}
 \end{frame}
 
