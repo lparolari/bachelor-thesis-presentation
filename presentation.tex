@@ -597,9 +597,33 @@ eq(T1, T2, R),
 \section{Uso del solver}
 %------------------------------------------------
 
-\begin{frame}
-	\frametitle{Uso del solver}
-	TODO
+\begin{frame}[fragile]
+  \frametitle{Uso del solver}
+  \begin{columns}[c]
+    \column{.45\textwidth}
+    \textbf{Modalità interattiva}
+    \begin{exampleblock}{Esempio (Interprete)}
+\begin{verbatim}
+log> solve 
+[eq(X,1), neq(X,1)]
+\end{verbatim}
+    \end{exampleblock}
+
+    \column{.45\textwidth}
+    \textbf{API}
+    \begin{exampleblock}{Esempio (API)}
+      Utilizzando il metodo \texttt{solve/2}
+\begin{verbatim}
+my_predicate =>
+    Formula = [ 
+        $eq(X,1), 
+        $neq(X,1) 
+    ],
+    solve(Formula, Result),
+    println(Result).
+\end{verbatim}
+    \end{exampleblock}
+  \end{columns}
 \end{frame}
 
 %------------------------------------------------
