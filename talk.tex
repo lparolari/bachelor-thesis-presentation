@@ -89,15 +89,51 @@ Esistono già diverse implementazioni di \lset{}, come ad esempio
 setlog scritto in prolog o JSetL per Java. In questo contesto è stato
 sperimentato Picat per l'implementazione di \lset{}. Picat è un
 linguaggio di programmazione multiparadigna basato sulla logica dei
-predicati del primo ordine, per applicazioni general purpose. Picat è
-l'acronimo delle caratteristiche che lui stesso offre. Senza scendere
-in dettagli tecnici, Picat propone come punti di forza l'essere basato
-su pattern matching, ovvero le regole applcabili ad una certa chiamata
-vengono tramite il pattern matching, l'essere intuitivo fornendo
-costrutti comunemente utilizzato in linguaggi imperativi, il supporto
-nativo della programmazione con vincoli, il supporto della
-programmazione di attori event-driven e il supporto di meccanismi di
-caching in maniera trasparente.
+predicati del primo ordine, per applicazioni general purpose. Picat
+prende il nome dai suoi punti di forza. Senza scendere in dettagli
+tecnici, Picat si propone come un linguaggio basato su pattern
+matching, ovvero le regole applcabili ad una certa chiamata vengono
+selezionate tramite il pattern matching, intuitivo fornendo costrutti
+comunemente utilizzati in linguaggi imperativi, il supporto nativo
+della programmazione con vincoli, il supporto alla programmazione di
+attori event-driven e il supporto di meccanismi di caching.  Voglio
+accentuare soprattutto la I (Intuitive) in quanto soprattutto per
+l'ambito dei linguaggi logici capita spesso che programmi di
+medie/grandi dimensioni siano piuttosto difficili da capire e da
+manutenere. In Picat questo problema cerca di essere affrontato con
+costrutti che richiamano la programmazione OOP come ad esempio i
+moduli, le funzioni, la notazione oggetto punto metodo... Vediamo
+quindi un esempio: qui è mostrato come Picat può essere un normale
+linguaggio logico con predicati, chiamate ricorsive, eccetera, mentre
+in quest'altro esempio vediamo come è possibile adottare uno stile di
+programmazione più imperativo.
+
+Non mi soffermo di troppo sugli esempi perché sono solo a scopo
+dimostrativo.
+
+Voglio invece spendere qualche parola sulle differenze tra Picat e
+Prolog, il suo rivale. Le differenze tra i due linguaggi non sono
+poche e nemmeno trascurabli. Visto che ci sono degli esempi nelle
+slide successive per unificazione, backtracking e costrutti partirei
+dai predicati dinamici, che a Picat mancano: non è possibile asserire
+predicati durante l'esecuzione. Ciò rende Picat meno flessibile
+rispetto al Prolog, ma anche meno soggetto a bug. Anche gli operatori
+non possono essere definiti dall'utente in Picat: questo è un grosso
+punto a sfavore perché ad esempio per il linguaggio \lset{} sarebbe
+stato molto naturale definire degli operatori per rappresentare i
+vincoli. Un'altra differenza tra i due linguaggi è l'unificazione ed
+il pattern matching. In picat viene utilizzato il pattern matching per
+decidere quale regola applicare, mentre in prolog si utilizza sempre
+l'unificazione. Ciò porta ad alcune divergenze nell'esecuzione di
+predicati simili, ad esempio questo [indicare con il dito]. Anche sul
+backtracking trovaimo qualche discrepanza. In prolog tutti i predicati
+sono backtrackabili, ed il cotrollo è effettuato con il cut. In Picat
+invece è possibile definire la backtrackabilità specificandolo nella
+testa del predicato. Un'altra differenza forte tra i due linguaggi
+sono i costrutti: Picat offre una serie di costrutti che permettono al
+programmatore l'utilizzo di funzionalità che vengono dal mondo della
+programmazione imperativa. Spesso semplificano il codice soprattutto
+per programmi di scripting.
 
 TODO
 

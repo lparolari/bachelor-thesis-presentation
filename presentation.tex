@@ -353,25 +353,24 @@ fib(N,F) =>
 %------------------------------------------------
 
 \begin{frame}[fragile]
-  \frametitle{Picat vs. Prolog (1/3)}
-  \begin{exampleblock}{Esempio (Gestione backtracking)}
-\begin{verbatim}
-% Prolog 
-membchk(X,[X|_]) :- !.
-membchk(X,[_|T]) :- membchk(X,T).
+  \frametitle{Picat vs. Prolog}
+  \begin{itemize}
+  	\item Unificazione e pattern-matching
+  	\item Backtracking
+  	\item Predicati dinamici
+  	\item Operatori definiti da utente
+  	\item Costrutti
+  \end{itemize}
 
-% Picat
-membchk(X,[X|_]) => true.
-membchk(X,[_|T]) => membchk(X,T).
-\end{verbatim}
-  \end{exampleblock}
 \end{frame}
 
 %------------------------------------------------
 
 \begin{frame}[fragile]
-  \frametitle{Picat vs. Prolog Esempio (1/2)}
-  \begin{exampleblock}{Esempio (Gestione backtracking)}
+  \frametitle{Unificazione e pattern-matching}
+  Il predicato \texttt{membchk(X, L)} è vero se \texttt{X} è un elemento di \texttt{L}.
+  
+  \begin{exampleblock}{Esempio (pattern-matching)}
 \begin{verbatim}
 % Prolog 
 membchk(X,[X|_]) :- !.
@@ -382,7 +381,49 @@ membchk(X,[X|_]) => true.
 membchk(X,[_|T]) => membchk(X,T).
 \end{verbatim}
   \end{exampleblock}
+ 
+  La stessa chiamata \texttt{membchk(X, L)} può avere risultati diversi in Prolog o Picat a seconda che \texttt{X} o \texttt{L} non siano \emph{ground}.
 \end{frame}
+
+%------------------------------------------------
+
+\begin{frame}[fragile]
+  \frametitle{Backtracking} 
+  Il predicato \texttt{member(X, L)} è verso se \texttt{X} è un elemento di \texttt{L}. Se \texttt{X} è una variabile il predicato potrebbe istanziare \texttt{X} a elementi differenti di \texttt{L}.
+  
+  \begin{exampleblock}{Esempio (Gestione backtracking)}
+\begin{verbatim}
+% Prolog 
+member(X,[X|_]).
+member(X,[_|T]) :- member(X,T).
+
+% Picat
+member(X,[Y|_]) ?=> X = Y.
+member(X,[_|T]) => member(X,T).
+\end{verbatim}
+  \end{exampleblock}
+  In Picat è necessario indicare esplicitamente una regola \emph{backtrackable}.
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}[fragile]
+  \frametitle{Costrutti} 
+  Picat fornisce numerosi costrutti built-in.
+  \begin{exampleblock}{Esempio (Costrutti)}
+\begin{verbatim}
+show(List) =>
+    I = 1,
+    foreach(X in List)
+        printf("%s: %s%n", 
+               I.to_string(), 
+               X.to_string()),
+        I := I + 1
+    end.
+\end{verbatim}
+  \end{exampleblock}
+\end{frame}
+
 
 %------------------------------------------------
 \section{\lset{} in Picat}
