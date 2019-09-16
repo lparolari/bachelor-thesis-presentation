@@ -430,8 +430,123 @@ show(List) =>
 %------------------------------------------------
 
 \begin{frame}
-  \frametitle{Il sistema}
-  TODO
+  \frametitle{Linguaggio concreto di input per al solver}
+  \begin{itemize}
+  	\item Impossibile l'implementazione del linguaggio \lset{} in Picat per via di limitazioni intrinseche del linguaggio
+  	\item Adozione di un linguaggio con delle varianti sintattiche per implementazione in Picat
+  \end{itemize}
+  \begin{table}
+    \begin{tabular}{l l l}
+      \toprule
+        & \textbf{\lset{}} & \textbf{Picat}\\
+      \midrule
+      \textbf{Formule} & $T_1, \ldots, T_n$ & $[T_1, \ldots, T_n]$ \\
+      \textbf{Vincoli} & $T_1 = T_2$ & $eq(T_1, T_2)$ \\
+      \textbf{Insiemi} & $\{T_1, \ldots, T_n \mid X\}$ & $[T_1, \ldots, T_n \mid X]$ \\
+      \bottomrule
+    \end{tabular}
+  \caption{Notazione per il linguaggio concreto di input}
+  \end{table}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+  \frametitle{Architettura del sistema}
+  \begin{itemize}
+    \item Architettura a moduli
+    \begin{itemize}
+      \item solver.pi
+      \item commands.pi
+      \item lset.pi
+      \item global.pi
+      \item log\textunderscore h.pi
+      \item prompt.pi
+      \item assert.pi
+    \end{itemize}
+	\item Approccio OOP
+  \end{itemize}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+	\frametitle{Il solver (1/3)}
+	\begin{itemize}
+		\item Implementa la procedura decisionale \satset{}
+		\item Se la soluzione esiste, deve essere in grado di mostrarle tutte
+		\item Riscrive i vincoli fintanto che non è raggiunto il punto fisso
+		\item La formula finale ottenuta è semplificata e irriducibile, ovvero equivalente alla formula orginale
+	\end{itemize}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}[fragile]
+  \frametitle{Il solver (2/3)}
+  \framesubtitle{Il predicato solve/2}
+  
+  \begin{columns}[c]
+  	\column{0.4\textwidth}
+	\begin{itemize}
+		\item Interfaccia del solver
+		\item Implementa il ciclo che riscrive la formula fino al punto fisso
+	\end{itemize}
+
+    \column{0.5\textwidth}  
+    \begin{exampleblock}{Esempio (Predicato solve/2)}
+\begin{verbatim}
+solve(C, CC) =>
+    CN = [],
+    foreach (T in C)
+        sat(T, C1),
+        CN := CN ++ C1,
+    end,
+    CN := CN.flatten(),
+    
+    if C == CN
+    then CC = CN
+    else solve(CN, CC)
+    end.
+\end{verbatim}
+    \end{exampleblock}	
+  \end{columns}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}[fragile]
+  \frametitle{Il solver (3/3)}
+  \framesubtitle{Il predicato sat/2 e rule/2}	
+  
+  \begin{columns}[c]
+  
+    \column{0.4\textwidth}
+    \begin{itemize}
+      \item Seleziona la regola di riscrittura da applicare
+      \item Effettua il dispatching della regola, eseguendola
+    \end{itemize}
+
+    \column{0.55\textwidth}  
+    \begin{exampleblock}{Esempio (Predicato sat/2)}
+\begin{verbatim}
+sat(F, FF), F == [] => FR = [].
+sat(F, FF) => rule(F, FF).
+\end{verbatim}
+    \end{exampleblock}	
+
+  \end{columns}
+
+  \begin{exampleblock}{Esempio (Predicato rule/2)}
+\begin{verbatim}
+rule(eq(T1, T2), R)  => eq(T1, T2, R).
+rule(neq(T1, T2), R) => neq(T1, T2, R).
+rule(nin(X, S), R)   => nin(X, S, R).
+rule(union(S1, S2, S3), R) => union(S1, S2, S3, R).
+...
+\end{verbatim}
+  \end{exampleblock}
+
 \end{frame}
 
 %------------------------------------------------
