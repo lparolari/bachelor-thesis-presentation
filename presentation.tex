@@ -123,40 +123,39 @@
 % The short title appears at the bottom of every slide, 
 % the full title is only on the title page
 \title[
-	\lset{} in Picat
+  \lset{} in Picat
 ]{
-	Progettazione e implementazione
-	in Picat di un risolutore per vincoli insiemistici}
+  Progettazione e implementazione
+  in Picat di un risolutore per vincoli insiemistici}
 
 \author[Luca \textsc{Parolari}]{
-\textit{Candidato:} Luca \textsc{Parolari} \\
-\textit{Relatore:} Gianfranco \textsc{Rossi}
+  \textit{Candidato:} Luca \textsc{Parolari} \\
+  \textit{Relatore:} Gianfranco \textsc{Rossi}
 }
 
 \institute[UNIPR]
 {
-	Università di Parma \\
-	Dipartimento di Scienze Matematiche Fisiche e Informatiche \\
-	Corso di Laurea in Informatica
+  Università di Parma \\
+  Dipartimento di Scienze Matematiche, Fisiche e Informatiche \\
+  Corso di Laurea in Informatica
 }
 \date{26 settembre 2019}
 
 
+
 \begin{document}
 
+%------------------------------------------------
+
 \begin{frame}
-\titlepage % Print the title page as the first slide
+  \titlepage
 \end{frame}
 
-\begin{frame}
-\frametitle{Panoramica della presentazione}
-%%% manual toc
-%\begin{itemize}
-%	\item Il linguaggio \lset{}
-%\end{itemize}
+%------------------------------------------------
 
-%%% automatic toc
-\tableofcontents
+\begin{frame}
+  \frametitle{Panoramica della presentazione}
+  \tableofcontents
 \end{frame}
 
 %-------------------------------------------------------------------
@@ -191,35 +190,10 @@
   \medskip
   \textbf{Esempi}
   \begin{itemize}
-  \item $1$, $a$, $f(\ldots)$, etc.
-  \item $un(\cdot, \cdot, \cdot)$, etc.
+  \item $1$, $a$, $f(\ldots)$, $\{1|\{2|\emptyset\}\} \equiv \{1,2\}$ etc.
+  \item $un(\{1\}, \{2\}, S)$, etc.
   \item $A$, $B$, $X$, $Y$, $Var$, etc.
   \end{itemize}
-\end{frame}
-
-%------------------------------------------------
-
-\begin{frame}
-  \frametitle{Semantica informale}
-  \begin{block}{Semantica informale}
-    Semantica intuitiva dei simboli in $\Sigma_{\lset}$:
-    \begin{itemize}
-    \item $\emptyset$ rappresenta l’insieme vuoto;
-    \item $\{\cdot\mid\cdot\}$ rappresenta il costruttore di insiemi
-      definito come $\{t\mid s\} = \{t\}\ \cup s$;
-    \item il predicato $=$ rappresenta la relazione di uguaglianza;
-    \item il predicato \textit{in} rappresenta la relazione di
-      appartenenza;
-    \item il predicato \textit{un} rappresenta la relazione di unione;
-      insiemistica definita come: $un(r,s,t) = true
-      \Longleftrightarrow t = r \cup s$;
-    \item il predicato \textit{disj} rappresenta la relazione di
-      disgiunzione insiemistica definita come $disj(r,s) = true
-      \Longleftrightarrow r \cap s = \emptyset$;
-    \item il predicato \textit{set} controlla che il termine sia un
-      insieme.
-    \end{itemize}
-  \end{block}
 \end{frame}
 
 %------------------------------------------------
@@ -230,13 +204,6 @@
   \lset{}-\textit{formule}.
   \begin{columns}[c]
     \column{.45\textwidth}
-    \begin{exampleblock}{Esempio (\lset{}-\textit{termini})}
-      \begin{itemize}
-      \item $\{1 \mid \emptyset \} \equiv \{1\}$
-      \item $\{1 \mid \{2 \mid \emptyset \} \} \equiv \{1,2\}$
-      \item $\{1 \mid \{2 \mid X \} \} \equiv \{1,2 \mid X \}$
-      \end{itemize}
-    \end{exampleblock}
     \begin{exampleblock}{Esempio (\lset{}-\textit{vincoli})}
       \begin{itemize}
       \item $X = 1$
@@ -256,38 +223,30 @@
 %------------------------------------------------
 
 \begin{frame}
-  \frametitle{Il solver \satset{}}
-  % The "c" option specifies centered vertical alignment while the "t"
-  % option is used for top vertical alignment
+  \frametitle{Il solver \satset{}} % The "c" option specifies centered
+  vertical alignment while the "t" % option is used for top vertical
+  alignment
   \begin{columns}[c]
 
-    \column{.5\textwidth} % Left column and width
-    %\begin{algorithm}
-    %	\caption{Procedura \satset{}}
-    \begin{algorithmic}[1]
-      \Procedure{\satset{$(C)$}}{}
-      \State $C \gets $ \texttt{sort\_infer($C$)};
-      \Repeat
-      \State $C'$ $\gets C;$
-      \Repeat
-      \State $C'' \gets C;$
-      \State $C \gets $ \texttt{STEP($C$)};
-      \Until {$C$ = $C''$;}
-      \State $C \gets $ \texttt{remove\_neq($C$)};
-      \Until {$C'$ = $C$;}
-      \State
-      \State\Return $C$;
-      \EndProcedure
-    \end{algorithmic}
-    %	\label{alg:pseudo_satset}
-    %\end{algorithm}
+    \column{.45\textwidth} % Left column and width
+    \begin{itemize}
+    \item La procedura \satset{} è la procedura di decisione per i
+      vincoli
+    \item \satset{} utilizza riscritture sintattiche per risolvere le
+      formule
+    \end{itemize}
 
-    \column{.45\textwidth} % Right column and width
-    La procedura \satset{} è la procedura di risoluzione dei vincoli,
-    che in \texttt{sort\textunderscore infer} aggiunge i vincoli sui
-    tipi, in \texttt{remove\textunderscore neq} rimuove un certo tipo
-    di $\neq$-\textit{constraints}, mentre in \texttt{STEP} applica le
-    \textbf{regole di riscrittura}.
+    \column{.5\textwidth} % Right column and width
+    \begin{exampleblock}{Esempio (Formula insoddisfacibile)}
+      $X = \{\} \land X\ neq\ \{\}$
+      
+      Nessuna soluzione.
+    \end{exampleblock}
+    \begin{exampleblock}{Esempio (Formula soddisfacibile)}
+      $1\ nin\ \{A, B\}$
+      
+      Una soluzione: $A \neq 1 \land B \neq 1$
+    \end{exampleblock}
   \end{columns}
 \end{frame}
 
@@ -302,19 +261,35 @@
     sulla logica dei predicati del primo ordine per applicazioni
     \emph{general-purpose}.
   \end{block}
+
   \medskip
-  \textbf{Caratteristiche principali}
+
+  \textbf{Autori}: Neng-Fa Zhou e Jonathan Fruhman
+  
+  \textbf{Stato dell'arte}:
+  \begin{itemize}
+  \item Inizio dello sviluppo a \emph{maggio 2013}
+  \item Rilascio della prima versione stabile 1.0 ad \emph{aprile
+    2015}
+  \item Rilascio della versione 2.0 nel \emph{novembre 2017}
+  \item Ultima versione 2.6\#2 rilasciata a \emph{marzo 2019}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Il linguaggio Picat} \framesubtitle{Caratteristiche
+    principali}
   \begin{itemize}
   \item \textbf{P}attern-matching, predicati e funzioni sono definiti
-    tramite regole di pattern-matching;
+    tramite pattern-matching;
   \item \textbf{I}ntuitive, sono forniti comandi utilizzati nei comuni
     linguaggi imperativi;
   \item \textbf{C}onstraints, la programmazione con vincoli è
     supportata nativamente;
   \item \textbf{A}ctors, viene fornito il supporto per attori
     event-driven;
-  \item \textbf{T}abling, viene fornito un sistema di caching per
-    la memorizzazione di risultati parziali.
+  \item \textbf{T}abling, viene fornito un sistema di caching per la
+    memorizzazione di risultati parziali.
   \end{itemize}
 \end{frame}
 
@@ -322,9 +297,10 @@
 
 \begin{frame}[fragile]
   \frametitle{Esempi (1/2)}
-  \begin{exampleblock}{Esempio (Approccio logic programming)}
+  \framesubtitle{Approccio logic programming}
+  \begin{exampleblock}{Esempio (Sequenza di Fibonacci)}
 \begin{verbatim}
-fib(0,F) => F=1.
+fib(0,F) => F=0.
 fib(1,F) => F=1.
 fib(N,F),N>1 => fib(N-1,F1), fib(N-2,F2), F=F1+F2.
 fib(N,F) => throw $error(wrong_argument,fib,N).
@@ -336,14 +312,17 @@ fib(N,F) => throw $error(wrong_argument,fib,N).
 
 \begin{frame}[fragile]
   \frametitle{Esempi (2/2)}
-  \begin{exampleblock}{Esempio (Approccio imperative programming)}
+  \framesubtitle{Approccio imperative programming}
+  \begin{exampleblock}{Esempio (Sequenza di Fibonacci)}
 \begin{verbatim}
-fib(N,F) =>
-    if (N=0; N=1) then
-        F=1
-    elseif N>1 then
-        fib(N-1,F1),fib(N-2,F2),F=F1+F2
-    else
+fib(N) = F =>
+    if (N = 0) then
+        F = 0
+    elseif (N = 1) then
+        F = 1
+    elseif N > 1 then
+        F = fib(N-1) + fib(N-2)
+    else 
         throw $error(wrong_argument,fib,N)
     end.
 \end{verbatim}
@@ -354,42 +333,65 @@ fib(N,F) =>
 
 \begin{frame}[fragile]
   \frametitle{Picat vs. Prolog}
-  \begin{itemize}
-  	\item Unificazione e pattern-matching
-  	\item Backtracking
-  	\item Predicati dinamici
-  	\item Operatori definiti da utente
-  	\item Costrutti
-  \end{itemize}
-
+  \begin{table}
+    \begin{tabular}{l l l}
+      & \textbf{Prolog} & \textbf{Picat} \\
+      \addlinespace
+      \textbf{Selezione regole applicabili} & Unificazione & Pattern-matching \\
+      \textbf{Backtracking} & Sì (default) & Sì \\
+      \textbf{Predicati dinamici} & Sì & No \\
+      \textbf{Operatori definiti da utente} & Sì & No \\
+      \textbf{Costrutti di controllo} & No & Si
+    \end{tabular}
+  \end{table}
 \end{frame}
 
 %------------------------------------------------
 
 \begin{frame}[fragile]
   \frametitle{Unificazione e pattern-matching}
-  Il predicato \texttt{membchk(X, L)} è vero se \texttt{X} è un elemento di \texttt{L}.
   
-  \begin{exampleblock}{Esempio (pattern-matching)}
+  Il predicato \texttt{p(X, X)} ha comportamenti diversi in Prolog e
+  Picat.
+  \begin{columns}[c]
+    
+    \column{0.45\textwidth}
+    \begin{exampleblock}{Esempio (Unificazione)}
 \begin{verbatim}
-% Prolog 
-membchk(X,[X|_]) :- !.
-membchk(X,[_|T]) :- membchk(X,T).
+% Prolog
+p(X, X) :- true.
 
-% Picat
-membchk(X,[X|_]) => true.
-membchk(X,[_|T]) => membchk(X,T).
+?- p(1, 1).
+true
+?- p(1, Z).
+Z = 1
 \end{verbatim}
-  \end{exampleblock}
- 
-  La stessa chiamata \texttt{membchk(X, L)} può avere risultati diversi in Prolog o Picat a seconda che \texttt{X} o \texttt{L} non siano \emph{ground}.
+    \end{exampleblock}
+    
+    \column{0.45\textwidth}
+    \begin{exampleblock}{Esempio (Pattern-matching)}
+\begin{verbatim}
+% Picat
+p(X, X) => true.
+
+> p(1, 1).
+true
+> p(1, Z).
+false
+\end{verbatim}
+    \end{exampleblock}
+  \end{columns}
+
+  \medskip
+
+  In Picat per avere lo stesso comportamento del Prolog bisogna
+  scrivere \texttt{p(X, Y) => X = Y}, forzando l'unificazione.
 \end{frame}
 
 %------------------------------------------------
 
 \begin{frame}[fragile]
-  \frametitle{Backtracking} 
-  Il predicato \texttt{member(X, L)} è verso se \texttt{X} è un elemento di \texttt{L}. Se \texttt{X} è una variabile il predicato potrebbe istanziare \texttt{X} a elementi differenti di \texttt{L}.
+  \frametitle{Backtracking}
   
   \begin{exampleblock}{Esempio (Gestione backtracking)}
 \begin{verbatim}
@@ -402,14 +404,22 @@ member(X,[Y|_]) ?=> X = Y.
 member(X,[_|T]) => member(X,T).
 \end{verbatim}
   \end{exampleblock}
-  In Picat è necessario indicare esplicitamente una regola \emph{backtrackable}.
+
+  \begin{itemize}
+  \item In Picat è necessario indicare esplicitamente una regola
+    \emph{backtrackable}.
+  \item Una regola \emph{non-backtrackable} in Picat è come una regola
+    Prolog seguita da \emph{cut} (!).
+  \end{itemize}
+  
 \end{frame}
 
 %------------------------------------------------
 
 \begin{frame}[fragile]
-  \frametitle{Costrutti} 
-  Picat fornisce numerosi costrutti built-in.
+  \frametitle{Costrutti} Picat fornisce numerosi costrutti, ad esempio
+  \texttt{foreach}, \texttt{while}, \texttt{if-then-else}, \texttt{:=}
+  (assegnamento), etc.
   \begin{exampleblock}{Esempio (Costrutti)}
 \begin{verbatim}
 show(List) =>
@@ -430,22 +440,22 @@ show(List) =>
 %------------------------------------------------
 
 \begin{frame}
-  \frametitle{Linguaggio concreto di input per al solver}
+  \frametitle{\lset{} in Picat}
+  \framesubtitle{Linguaggio concreto di input per il solver}
   \begin{itemize}
-  	\item Impossibile l'implementazione del linguaggio \lset{} in Picat per via di limitazioni intrinseche del linguaggio
-  	\item Adozione di un linguaggio con delle varianti sintattiche per implementazione in Picat
+  \item Adozione di una sintassi semplificata per il linguaggio di input.
   \end{itemize}
   \begin{table}
     \begin{tabular}{l l l}
       \toprule
-        & \textbf{\lset{}} & \textbf{Picat}\\
+      & \textbf{\lset{}} & \textbf{Impl. Picat}\\
       \midrule
-      \textbf{Formule} & $T_1, \ldots, T_n$ & $[T_1, \ldots, T_n]$ \\
-      \textbf{Vincoli} & $T_1 = T_2$ & $eq(T_1, T_2)$ \\
       \textbf{Insiemi} & $\{T_1, \ldots, T_n \mid X\}$ & $[T_1, \ldots, T_n \mid X]$ \\
+      \textbf{Vincoli} & $T_1 = T_2$ & $eq(T_1, T_2)$ \\
+      \textbf{Formule} & $T_1 \land \ldots \land T_n$ & $[T_1, \ldots, T_n]$ \\
       \bottomrule
     \end{tabular}
-  \caption{Notazione per il linguaggio concreto di input}
+    \caption{Notazione per il linguaggio concreto di input}
   \end{table}
 \end{frame}
 
@@ -454,44 +464,45 @@ show(List) =>
 \begin{frame}
   \frametitle{Architettura del sistema}
   \begin{itemize}
-    \item Architettura a moduli
+  \item Architettura a moduli
     \begin{itemize}
-      \item solver.pi
-      \item commands.pi
-      \item lset.pi
-      \item global.pi
-      \item log\textunderscore h.pi
-      \item prompt.pi
-      \item assert.pi
+    \item solver.pi
+    \item commands.pi
+    \item lset.pi
+    \item global.pi
+    \item log\textunderscore h.pi
+    \item prompt.pi
+    \item assert.pi
     \end{itemize}
-	\item Approccio OOP
+  \item Approccio OOP
   \end{itemize}
 \end{frame}
 
 %------------------------------------------------
 
 \begin{frame}
-	\frametitle{Il solver (1/3)}
-	\begin{itemize}
-		\item Implementa la procedura decisionale \satset{}
-		\item Se la soluzione esiste, deve essere in grado di mostrarle tutte
-		\item Riscrive i vincoli fintanto che non è raggiunto il punto fisso
-		\item La formula finale ottenuta è semplificata e irriducibile, ovvero equivalente alla formula orginale
-	\end{itemize}
+  \frametitle{Il solver}
+  \begin{itemize}
+  \item Implementa la procedura decisionale \satset{}
+  \item Se la soluzione esiste, deve essere in grado di mostrarle tutte
+  \item Riscrive i vincoli fintanto che non è raggiunto il punto fisso
+  \item La formula finale ottenuta è \textbf{irriducibile}, \textbf{semplificata} ed \textbf{equivalente} alla formula orginale
+  \end{itemize}
 \end{frame}
 
 %------------------------------------------------
 
 \begin{frame}[fragile]
-  \frametitle{Il solver (2/3)}
+  \frametitle{Il solver}
   \framesubtitle{Il predicato solve/2}
   
   \begin{columns}[c]
-  	\column{0.4\textwidth}
-	\begin{itemize}
-		\item Interfaccia del solver
-		\item Implementa il ciclo che riscrive la formula fino al punto fisso
-	\end{itemize}
+    \column{0.4\textwidth}
+    \begin{itemize}
+    \item Interfaccia del solver
+    \item Implementa il ciclo che riscrive la formula fino al punto fisso
+    \item Il predicato \texttt{sat/2} seleziona ed esegue le regole di riscrittura
+    \end{itemize}
 
     \column{0.5\textwidth}  
     \begin{exampleblock}{Esempio (Predicato solve/2)}
@@ -514,82 +525,32 @@ solve(C, CC) =>
 \end{frame}
 
 %------------------------------------------------
-
-\begin{frame}[fragile]
-  \frametitle{Il solver (3/3)}
-  \framesubtitle{Il predicato sat/2 e rule/2}	
-  
-  \begin{columns}[c]
-  
-    \column{0.4\textwidth}
-    \begin{itemize}
-      \item Seleziona la regola di riscrittura da applicare
-      \item Effettua il dispatching della regola, eseguendola
-    \end{itemize}
-
-    \column{0.55\textwidth}  
-    \begin{exampleblock}{Esempio (Predicato sat/2)}
-\begin{verbatim}
-sat(F, FF), F == [] => FR = [].
-sat(F, FF) => rule(F, FF).
-\end{verbatim}
-    \end{exampleblock}	
-
-  \end{columns}
-
-  \begin{exampleblock}{Esempio (Predicato rule/2)}
-\begin{verbatim}
-rule(eq(T1, T2), R)  => eq(T1, T2, R).
-rule(neq(T1, T2), R) => neq(T1, T2, R).
-rule(nin(X, S), R)   => nin(X, S, R).
-rule(union(S1, S2, S3), R) => union(S1, S2, S3, R).
-...
-\end{verbatim}
-  \end{exampleblock}
-
-\end{frame}
-
-%------------------------------------------------
 \section{Implementazione}
 %------------------------------------------------
 
-\begin{frame}
-  \frametitle{Regole di riscrittura}
-  \begin{block}{Definizione (Regola di riscrittura)}
-    Se $\pi$ è un simbolo di $\prod$ e $\Phi$ è un \lset{}-\textit{constraint} basato su $\pi$, allora una \emph{regola di riscrittura per $\pi$-constraint} è una regola della forma $\Phi \to \Phi_1 \lor \ldots \lor \Phi_n$, dove $\Phi_i, i \geq 1$ sono \lset{}-formule.
-  \end{block}
-  \begin{exampleblock}{Esempio (Regola $=_2$)}
-  	\[ \text{Se }t \not\in \calV, t = \dotx \to \dotx = t \]
-  	
-  	il cui risultato pratico è quello di invertire un termine variabile con uno non variabile qualora non siano ``orientati'' correttamente, in pratica:
-  	
-    \[ 1 = X \to X = 1 \]
-  \end{exampleblock}
-\end{frame}
-
 %------------------------------------------------
 
 \begin{frame}[fragile]
-  \frametitle{Implementazione}
-  L'implementazione in Picat è semplice e molto vicina alla descrizione matematica
+  \frametitle{Implementazione regole di riscrittura} L'implementazione
+  in Picat è semplice e molto vicina alla descrizione matematica
   \begin{columns}[c]
-  	\column{0.45\textwidth}
-  	\begin{exampleblock}{Esempio (Desc. matematica)}
-  	  Regola $=_2$:
-  	  \[
-  	    \text{Se }t \not\in \calV, t = \dotx \to \dotx = t 
-  	  \]
-  	\end{exampleblock}
-  
-  	\column{0.45\textwidth}
-  	\begin{exampleblock}{Esempio (Implementazione)}
+    \column{0.45\textwidth}
+    \begin{exampleblock}{Esempio (Desc. matematica)}
+      Regola $=_2$:
+      \[
+      \text{Se }t \not\in \calV, t = \dotx \to \dotx = t
+      \]
+    \end{exampleblock}
+    
+    \column{0.45\textwidth}
+    \begin{exampleblock}{Esempio (Implementazione)}
 \begin{verbatim}
 eq(T1, T2, R), 
         nonvar(T1),
         var(T2) =>      % 2
     R = [ $eq(T2, T1) ].
 \end{verbatim}
-  	\end{exampleblock}
+    \end{exampleblock}
   \end{columns}
 \end{frame}
 
@@ -614,6 +575,8 @@ log> solve
     \begin{exampleblock}{Esempio (API)}
       Utilizzando il metodo \texttt{solve/2}
 \begin{verbatim}
+import solver.
+
 my_predicate =>
     Formula = [ 
         $eq(X,1), 
@@ -631,15 +594,16 @@ my_predicate =>
 %------------------------------------------------
 
 \begin{frame}
-  \frametitle{Conclusioni}
-  Il risultato principale di questo lavoro di tesi è stata la progettazione ed implementazione in Picat di un constraint solver per formule insiemistiche.
+  \frametitle{Conclusioni} Il risultato principale di questo lavoro di
+  tesi è stata la progettazione ed implementazione in Picat di un
+  constraint solver per formule insiemistiche.
   
   \bigskip
   
   Per farlo, è stato necessario:
   \begin{itemize}
-  	\item sperimentare e capire Picat;
-  	\item progettare ed implementare il risolutore di formule stesso.
+  \item sperimentare e capire Picat;
+  \item progettare ed implementare il risolutore di formule stesso.
   \end{itemize}
 \end{frame}
 
@@ -648,8 +612,9 @@ my_predicate =>
 \begin{frame}
   \frametitle{Sviluppi futuri}
   \begin{itemize}
-  	\item Aggiungere il supporto alla sintassi nativa di \lset{}
-  	\item Arricchire e perfezionare la batteria di test per aumentare la qualità del codice prodotto
+  \item Aggiungere il supporto alla sintassi nativa di \lset{}
+  \item Arricchire e perfezionare la batteria di test per aumentare la
+    qualità del codice prodotto
   \end{itemize}
 \end{frame}
 
