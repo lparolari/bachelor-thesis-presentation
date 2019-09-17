@@ -19,6 +19,8 @@
 \date{26/09/2019}
 
 \input{macros}
+\newcommand*{\nextslide}{\textbf{[avanti]}}
+\newcommand*{\fingerpointer}{\textbf{[indicare con il dito]}}
 
 \begin{document}
 
@@ -26,7 +28,7 @@
 
 L'obiettivo del lavoro di tesi che vi presento oggi è la progettazione
 e l'implementazione di un risolutore di formule per vincoli
-insiemistici.
+insiemistici. \nextslide{}
 
 In questa presentazione voglio dare una breve panoramica del
 linguaggio \lset{}, il linguaggio utilizzato per la gestione di
@@ -37,7 +39,7 @@ realizzazione del solver e del suo sistema, problemi incontrati ed
 implementazione delle regole di riscrittura, componenti fondamentali
 del solver tramite i quali è stato possibile risolvere i vincoli. Si
 darà poi un accenno all'utilizzo del solver per concludere con la
-considerazioni finali ed i lavori futuri.
+considerazioni finali ed i lavori futuri. \nextslide{}
 
 \lset{} è un linguaggio basato su vincoli per esprimere e risolvere
 formule del primo ordine sull'universo degli insiemi finiti. E' stato
@@ -58,23 +60,24 @@ vincoli. Più in particolare, l'uguaglianza tra insiemi è implementata
 con l'unificazione insiemistica, mentre il soddisfacimento dei vincoli
 è verificato da un solver completo tramite una procedura di decisione
 per formule di \lset{} (questo solver è appunto l'oggetto oggetto di
-questo lavoro).
+questo lavoro). \nextslide{}
 
 Vediamo rapidamente la sintassi di questo linguaggio: possiamo notare
 che è denotata da insiemi piuttosto semplici, abbiamo un insieme
 finito $\calF$ di costanti e di simboli di funzione non interpretati
 come $1, a, f(1,2), ...$, l'insieme dei predicati come appunto $=$,
-unione, disgiunzione... e l'insieme delle variabili $\calV$.
+unione, disgiunzione... e l'insieme delle variabili
+$\calV$. \nextslide{}
 
 La semantica invece è piuttosto intuitiva: abbiamo l'insieme vuoto, il
 costruttore di insiemi che ci permette appunto di creare insiemi da un
 singoletto $t$ unito ad un resto $s$ e i predicati con relativa
-semantica.
+semantica. \nextslide{}
 
 Il linguaggio consente di combinare gli insiemi precedentemente
 mostrati in termini, vincoli o formule. Di particolare importanza sono
 le formule, che non sono altro che congiunzioni o disgiunzioni di
-termini e vincoli.
+termini e vincoli. \nextslide{}
 
 Lo pseudocodice mostrato in figura è la procedure di risoluzione per
 vincoli insiemistici adottata dal solver. Questa procedura sfrutta
@@ -83,7 +86,7 @@ procedura che applica le regole di riscrittura ai vincoli generandone
 di nuovi, possibilemnte più semplici dei precedenti.  Come evidenziato
 dai test dei cicli, la procedura termina quando viene raggiunto un
 punto fisso, ovvero non è più possibile trovare nuovi vincoli più
-semplici dei precedenti.
+semplici dei precedenti. \nextslide{}
 
 Esistono già diverse implementazioni di \lset{}, come ad esempio
 setlog scritto in prolog o JSetL per Java. In questo contesto è stato
@@ -102,14 +105,14 @@ l'ambito dei linguaggi logici capita spesso che programmi di
 medie/grandi dimensioni siano piuttosto difficili da capire e da
 manutenere. In Picat questo problema cerca di essere affrontato con
 costrutti che richiamano la programmazione OOP come ad esempio i
-moduli, le funzioni, la notazione oggetto punto metodo... Vediamo
-quindi un esempio: qui è mostrato come Picat può essere un normale
-linguaggio logico con predicati, chiamate ricorsive, eccetera, mentre
-in quest'altro esempio vediamo come è possibile adottare uno stile di
-programmazione più imperativo.
+moduli, le funzioni, la notazione oggetto punto metodo... \nextslide{}
+Vediamo quindi un esempio: qui è mostrato come Picat può essere un
+normale linguaggio logico con predicati, chiamate ricorsive, eccetera,
+mentre in quest'altro esempio \nextslide{} vediamo come è possibile
+adottare uno stile di programmazione più imperativo.
 
 Non mi soffermo di troppo sugli esempi perché sono solo a scopo
-dimostrativo.
+dimostrativo. \nextslide{}
 
 Voglio invece spendere qualche parola sulle differenze tra Picat e
 Prolog, il suo rivale. Le differenze tra i due linguaggi non sono
@@ -121,67 +124,71 @@ rispetto al Prolog, ma anche meno soggetto a bug. Anche gli operatori
 non possono essere definiti dall'utente in Picat: questo è un grosso
 punto a sfavore perché ad esempio per il linguaggio \lset{} sarebbe
 stato molto naturale definire degli operatori per rappresentare i
-vincoli. Un'altra differenza tra i due linguaggi è l'unificazione ed
-il pattern matching. In picat viene utilizzato il pattern matching per
-decidere quale regola applicare, mentre in prolog si utilizza sempre
-l'unificazione. Ciò porta ad alcune divergenze nell'esecuzione di
-predicati simili, ad esempio questo [indicare con il dito]. Anche sul
-backtracking trovaimo qualche discrepanza. In prolog tutti i predicati
-sono backtrackabili, ed il cotrollo è effettuato con il cut. In Picat
-invece è possibile definire la backtrackabilità specificandolo nella
-testa del predicato. Un'altra differenza forte tra i due linguaggi
+vincoli. \nextslide{} Un'altra differenza tra i due linguaggi è
+l'unificazione ed il pattern matching. In picat viene utilizzato il
+pattern matching per decidere quale regola applicare, mentre in prolog
+si utilizza sempre l'unificazione. Ciò porta ad alcune divergenze
+nell'esecuzione di predicati simili, ad esempio questo
+\fingerpointer{}. \nextslide{} Anche sul backtracking trovaimo qualche
+discrepanza. In prolog tutti i predicati sono backtrackabili, ed il
+cotrollo è effettuato con il cut. In Picat invece è possibile definire
+la backtrackabilità specificandolo nella testa del
+predicato. \nextslide{} Un'altra differenza forte tra i due linguaggi
 sono i costrutti: Picat offre una serie di costrutti che permettono al
 programmatore l'utilizzo di funzionalità che vengono dal mondo della
 programmazione imperativa. Spesso semplificano il codice soprattutto
-per programmi di scripting.
+per programmi di scripting. \nextslide{}
 
-La combinazione di \lset{} e Picat ha consentito l'implementazione del
-solver per \lset{} appunto in Picat. Come prima cosa è stato
-necessario definire un linguaggio concreto di input da dare in paso al
-solver: la sintassi \lset{} non è implementabile in Picat senza una
-fase di parsing. Le notazioni adottate sono riportate sulla slide
-[indicare con il dito], sono semplici espedienti notazionali che ci
-hanno permesso di implementare lset in Picat senza grossi sforzi di
-parsing. E' stato necessario progettare il solver ed il suo sistema:
-grazie alla caratteristica di Picat abbiamo potuto separare il sistema
-in moduli, ovvero insiemi di funzionalità fortemente accoppiate che
-interagiscono con gli altri moduli in modo debolemnte accoppiato. Si è
-cercato per quanto possibile di seguire un approccio OOP, integrando
-nei moduli delle interfacce offerte all'esterno e mascherando le
-integrazioni interne. Il modulo principale di tutto il sistema è però
+Una volta capito che Picat poteva essere un buon linguaggio ospite
+tramite il quale sperimentare l'implementazione del solver è iniziata
+la fase di progettazione del sistema \fixme{Finire di vedere questa
+  frase} Come prima cosa è stato necessario definire un linguaggio
+concreto di input da dare in paso al solver: la sintassi \lset{} non è
+implementabile in Picat senza una fase di parsing. Le notazioni
+adottate sono riportate sulla slide \fingerpointer{}, sono semplici
+espedienti notazionali che ci hanno permesso di implementare lset in
+Picat senza grossi sforzi di parsing. \nextslide{} E' stato poi
+necessario progettare il solver ed il suo sistema: grazie alla
+caratteristica di Picat abbiamo potuto separare il sistema in moduli,
+ovvero insiemi di funzionalità fortemente accoppiate che interagiscono
+con gli altri moduli in modo debolemnte accoppiato. Si è cercato per
+quanto possibile di seguire un approccio OOP, integrando nei moduli
+delle interfacce offerte all'esterno e mascherando le integrazioni
+interne. \nextslide{} Il modulo principale di tutto il sistema è però
 il solver, che realizza il ciclo di riscrittura dei vincoli. Di fatto
 il solver implementa la procedura \satset{} e restituisce le soluzioni
 trovate se esse esisono. Una peculiarità del solver è l'elencare tutte
 le soluzioni esistenti, che dalla teoria sappiamo essere finite. Una
 volta raggiunto il punto fisso la formula trovata è irriducibile ed
 eventualmente semplificata, ovvero equivalemnte alla formula
-orginale. Il solver possiede un predicato come interfaccia del modulo:
-il predicato solve due. Dal codice riportato vediamo data una formula
-in input si esegue un ciclo e si cerca di soddisfare tutti i vincoli
-nella formula. In questo punto è cruciale l'uso del non determinismo,
-che ci permette di non dipendere dall'ordine di soddisfacimento dei
-vincoli. Inoltre, vediamo come si vuole cercare il punto fisso con
-l'if finale: se C == CN allora il predicato termina con risultato CN,
-altrimenti si continua la ricerca. Per ogni vincolo della formula
-esiste una regola di riscrittura che implementa le relative
-riscritture. Il predicato sat ed il predicato rule combinati svolgono
-il ruolo di esecuzione della regola di riscrittura in base all'input
-dato. Di fatto rule/2 si comporta come uno switch sul primo argomento,
-le relative regole di riscrittura sono eseguite ed il risultato è
-messo in R, che ritorna poi a solve/2.
+orginale. \nextslide{} Il solver possiede un predicato come
+interfaccia del modulo: il predicato solve due. Dal codice riportato
+vediamo data una formula in input si esegue un ciclo e si cerca di
+soddisfare tutti i vincoli nella formula. In questo punto è cruciale
+l'uso del non determinismo, che ci permette di non dipendere
+dall'ordine di soddisfacimento dei vincoli. Inoltre, vediamo come si
+vuole cercare il punto fisso con l'if finale: se C == CN allora il
+predicato termina con risultato CN, altrimenti si continua la
+ricerca. Per ogni vincolo della formula esiste una regola di
+riscrittura che implementa le relative riscritture. \nextslide{} Il
+predicato sat ed il predicato rule combinati svolgono il ruolo di
+esecuzione della regola di riscrittura in base all'input dato. Di
+fatto rule/2 si comporta come uno switch sul primo argomento, le
+relative regole di riscrittura sono eseguite ed il risultato è messo
+in R, che ritorna poi a solve/2. \nextslide{}
 
 L'implementazione del solver è stata possibile grazie alle regole di
 riscrittura. Una regola di riscrittura spesso consente di riscrivere
 un vincolo in una forma più semplice. Tramite questo meccanismo il
-risolutore è in grado di giungere alla soluzione. Ogni vincolp ha il
-suo set di regole, nella slide è riportata la regola di riscrittura 2
-per il vincolo di uguaglianza. E' una regola molto semplice e permette
-di riscrivere un vincolo della forma $t = \dotx$ in $\dotx =
-t$. Vediamo quindi l'implementazione di questa semplice regola in
-Picat: il predicato eq implementa le regole di riscrittura per vincoli
-di uguaglianza e la regola eq 2 è selezionata tramite le condizioni di
-applicabilità come nonvar(T1) var(T2). Nella risultato R viene messa
-la riscrittura del vincolo.
+risolutore è in grado di giungere alla soluzione. \nextslide{} Ogni
+vincolp ha il suo set di regole, nella slide è riportata la regola di
+riscrittura 2 per il vincolo di uguaglianza. E' una regola molto
+semplice e permette di riscrivere un vincolo della forma $t = \dotx$
+in $\dotx = t$. Vediamo quindi l'implementazione di questa semplice
+regola in Picat: il predicato eq implementa le regole di riscrittura
+per vincoli di uguaglianza e la regola eq 2 è selezionata tramite le
+condizioni di applicabilità come nonvar(T1) var(T2). Nella risultato R
+viene messa la riscrittura del vincolo. \nextslide{}
 
 L'utilizzo del solver è piuttosto semplice e dispone di due modalità:
 la prima più a scopi didattici e di debugging è la modalità
@@ -191,14 +198,14 @@ invece è l'utilizzo tramite API. Questa modalità consentirebbe
 l'integrazione del solver in altri programmi che trattano formule,
 specialmente quelle di L SET come un servizio da invocare alla
 necessità. Il sistema è ovviamente un po' acerbo e andrebbe
-perfezionato, ma l'idea è questa.
+perfezionato, ma l'idea è questa. \nextslide{}
 
 Concludo con qualche considerazione su questo lavoro. Tutto ciò mi ha
 permesso di capire due linguaggi in contemporanea, di sperimentare un
 linguaggio logico nuovo ed innovativo come Picat e di progettare ed
-implementare un solver. Il lavoro non è ovviamente concluso qua: tra
-le varie migliorie e sviluppi futuri voglio citare l'integrazione del
-linguaggio \lset{} così com'è anche per Picat e la messa a punto del
-testing per il solver.
+implementare un solver. \nextslide{} Il lavoro non è ovviamente
+concluso qua: tra le varie migliorie e sviluppi futuri voglio citare
+l'integrazione del linguaggio \lset{} così com'è anche per Picat e la
+messa a punto del testing per il solver.
 
 \end{document}
