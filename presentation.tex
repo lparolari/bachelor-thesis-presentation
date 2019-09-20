@@ -173,6 +173,10 @@
     risolvere formule del primo ordine sull'universo degli insiemi
     finiti.
   \end{block}
+  \begin{itemize}
+  	\item Insiemi molto generali: \emph{untyped hereditarily finite hybrid sets}
+  	\item Manipolazione tramite usuali operatori su insiemi
+  \end{itemize}
 \end{frame}
 
 %------------------------------------------------
@@ -223,9 +227,7 @@
 %------------------------------------------------
 
 \begin{frame}
-  \frametitle{Il solver \satset{}} % The "c" option specifies centered
-  vertical alignment while the "t" % option is used for top vertical
-  alignment
+  \frametitle{Il solver \satset{}}
   \begin{columns}[c]
 
     \column{.45\textwidth} % Left column and width
@@ -337,11 +339,11 @@ fib(N) = F =>
     \begin{tabular}{l l l}
       & \textbf{Prolog} & \textbf{Picat} \\
       \addlinespace
-      \textbf{Selezione regole applicabili} & Unificazione & Pattern-matching \\
-      \textbf{Backtracking} & Sì (default) & Sì \\
       \textbf{Predicati dinamici} & Sì & No \\
       \textbf{Operatori definiti da utente} & Sì & No \\
-      \textbf{Costrutti di controllo} & No & Si
+      \textbf{Selezione regole applicabili} & Unificazione & Pattern-matching \\
+      \textbf{Backtracking} & Sì (default) & Sì \\
+      \textbf{Comandi/costrutti di controllo} & No & Si
     \end{tabular}
   \end{table}
 \end{frame}
@@ -417,7 +419,8 @@ member(X,[_|T]) => member(X,T).
 %------------------------------------------------
 
 \begin{frame}[fragile]
-  \frametitle{Costrutti} Picat fornisce numerosi costrutti, ad esempio
+  \frametitle{Comandi/costrutti di controllo} 
+  Picat fornisce numerosi costrutti, ad esempio
   \texttt{foreach}, \texttt{while}, \texttt{if-then-else}, \texttt{:=}
   (assegnamento), etc.
   \begin{exampleblock}{Esempio (Costrutti)}
@@ -545,10 +548,10 @@ solve(C, CC) =>
     \column{0.45\textwidth}
     \begin{exampleblock}{Esempio (Implementazione)}
 \begin{verbatim}
-eq(T1, T2, R), 
-        nonvar(T1),
-        var(T2) =>      % 2
-    R = [ $eq(T2, T1) ].
+eq(T, X, R), 
+        nonvar(T),
+        var(X) =>      % 2
+    R = [ $eq(X, T) ].
 \end{verbatim}
     \end{exampleblock}
   \end{columns}
@@ -613,6 +616,7 @@ my_predicate =>
   \frametitle{Sviluppi futuri}
   \begin{itemize}
   \item Aggiungere il supporto alla sintassi nativa di \lset{}
+  \item Estendere il supporto all'intero linguaggio \lset{} con funzioni parziali
   \item Arricchire e perfezionare la batteria di test per aumentare la
     qualità del codice prodotto
   \end{itemize}
