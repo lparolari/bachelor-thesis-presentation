@@ -129,8 +129,8 @@
   in Picat di un risolutore per vincoli insiemistici}
 
 \author[Luca \textsc{Parolari}]{
-  \textit{Candidato:} Luca \textsc{Parolari} \\
-  \textit{Relatore:} Gianfranco \textsc{Rossi}
+  \textit{Candidato:} Luca Parolari \\
+  \textit{Relatore:} Gianfranco Rossi
 }
 
 \institute[UNIPR]
@@ -174,8 +174,8 @@
     finiti.
   \end{block}
   \begin{itemize}
-  	\item Insiemi molto generali: \emph{untyped hereditarily finite hybrid sets}
-  	\item Manipolazione tramite usuali operatori su insiemi
+  	\item Insiemi molto generali: \emph{untyped hereditarily finite hybrid sets}.
+  	\item Manipolazione tramite usuali operatori su insiemi.
   \end{itemize}
 \end{frame}
 
@@ -186,8 +186,8 @@
   \begin{block}{Sintassi}
     Insiemi di simboli costituenti di \lset{}:
     \begin{itemize}
-    \item $\calF$, insieme di costanti e simboli di funzione;
-    \item $\prod_C = \{ =, \in, un, disj, set \}$;
+    \item $\calF$, insieme di costanti e simboli di funzione, tra cui $\emptyset$ e $\{ \cdot, \cdot \}$;
+    \item $\prod_C = \{ =, in, un, disj, set \}$;
     \item $\calV$, insieme numerabile di variabili.
     \end{itemize}
   \end{block}
@@ -195,33 +195,9 @@
   \textbf{Esempi}
   \begin{itemize}
   \item $1$, $a$, $f(\ldots)$, $\{1|\{2|\emptyset\}\} \equiv \{1,2\}$ etc.
-  \item $un(\{1\}, \{2\}, S)$, etc.
-  \item $A$, $B$, $X$, $Y$, $Var$, etc.
+  \item $X = 5$, $un(\{7\}, \emptyset, S)$\footnote{La semantica di $un(A,B,S)$ è $S = A \cup B $}, etc.
+  \item $(X\ in\ S \land X\ neq\ 1) \lor (X\ nin\ S \land X = 1)$, etc.
   \end{itemize}
-\end{frame}
-
-%------------------------------------------------
-
-\begin{frame}
-  \frametitle{Esempi} Il linguaggio \lset{} consente di combinare i
-  simboli in \lset{}-\textit{termini}, \lset{}-\textit{vincoli} ed
-  \lset{}-\textit{formule}.
-  \begin{columns}[c]
-    \column{.45\textwidth}
-    \begin{exampleblock}{Esempio (\lset{}-\textit{vincoli})}
-      \begin{itemize}
-      \item $X = 1$
-      \item $un(\{1\}, \emptyset, R)$
-      \end{itemize}
-    \end{exampleblock}
-    \column{.45\textwidth}
-    \begin{exampleblock}{Esempio (\lset{}-\textit{formule})}
-      \begin{itemize}
-      \item $1\ in\ R \land 1\ nin\ S \land un(R,S,T) \land T = \{X\}$
-      \item $(X\ in\ S \land X\ neq\ 1) \lor (X\ nin\ S \land X = 1)$
-      \end{itemize}
-    \end{exampleblock}
-  \end{columns}
 \end{frame}
 
 %------------------------------------------------
@@ -233,9 +209,9 @@
     \column{.45\textwidth} % Left column and width
     \begin{itemize}
     \item La procedura \satset{} è la procedura di decisione per i
-      vincoli
+      vincoli.
     \item \satset{} utilizza riscritture sintattiche per risolvere le
-      formule
+      formule.
     \end{itemize}
 
     \column{.5\textwidth} % Right column and width
@@ -266,15 +242,15 @@
 
   \medskip
 
-  \textbf{Autori}: Neng-Fa Zhou e Jonathan Fruhman
+  \textbf{Autori}: Neng-Fa Zhou e Jonathan Fruhman.
   
   \textbf{Stato dell'arte}:
   \begin{itemize}
-  \item Inizio dello sviluppo a \emph{maggio 2013}
+  \item Inizio dello sviluppo a \emph{maggio 2013}.
   \item Rilascio della prima versione stabile 1.0 ad \emph{aprile
-    2015}
-  \item Rilascio della versione 2.0 nel \emph{novembre 2017}
-  \item Ultima versione 2.6\#2 rilasciata a \emph{marzo 2019}
+    2015}.
+  \item Rilascio della versione 2.0 nel \emph{novembre 2017}.
+  \item Ultima versione 2.6\#2 rilasciata a \emph{marzo 2019}.
   \end{itemize}
 \end{frame}
 
@@ -283,13 +259,13 @@
     principali}
   \begin{itemize}
   \item \textbf{P}attern-matching, predicati e funzioni sono definiti
-    tramite pattern-matching;
+    tramite pattern-matching.
   \item \textbf{I}ntuitive, sono forniti comandi utilizzati nei comuni
-    linguaggi imperativi;
+    linguaggi imperativi.
   \item \textbf{C}onstraints, la programmazione con vincoli è
-    supportata nativamente;
+    supportata nativamente.
   \item \textbf{A}ctors, viene fornito il supporto per attori
-    event-driven;
+    event-driven.
   \item \textbf{T}abling, viene fornito un sistema di caching per la
     memorizzazione di risultati parziali.
   \end{itemize}
@@ -300,7 +276,7 @@
 \begin{frame}[fragile]
   \frametitle{Esempi (1/2)}
   \framesubtitle{Approccio logic programming}
-  \begin{exampleblock}{Esempio (Sequenza di Fibonacci)}
+  \begin{exampleblock}{Esempio (Successione di Fibonacci)}
 \begin{verbatim}
 fib(0,F) => F=0.
 fib(1,F) => F=1.
@@ -315,7 +291,7 @@ fib(N,F) => throw $error(wrong_argument,fib,N).
 \begin{frame}[fragile]
   \frametitle{Esempi (2/2)}
   \framesubtitle{Approccio imperative programming}
-  \begin{exampleblock}{Esempio (Sequenza di Fibonacci)}
+  \begin{exampleblock}{Esempio (Successione di Fibonacci)}
 \begin{verbatim}
 fib(N) = F =>
     if (N = 0) then
@@ -419,10 +395,8 @@ member(X,[_|T]) => member(X,T).
 %------------------------------------------------
 
 \begin{frame}[fragile]
-  \frametitle{Comandi/costrutti di controllo} 
-  Picat fornisce numerosi costrutti, ad esempio
-  \texttt{foreach}, \texttt{while}, \texttt{if-then-else}, \texttt{:=}
-  (assegnamento), etc.
+  \frametitle{Costrutti} 
+  Picat fornisce numerosi costrutti di controllo (\texttt{foreach}, \texttt{while}, \texttt{if-then-else}, etc.), funzioni e predicati \emph{built-in} e l'assegnamento (\texttt{:=}).
   \begin{exampleblock}{Esempio (Costrutti)}
 \begin{verbatim}
 show(List) =>
@@ -450,15 +424,12 @@ show(List) =>
   \end{itemize}
   \begin{table}
     \begin{tabular}{l l l}
-      \toprule
       & \textbf{\lset{}} & \textbf{Impl. Picat}\\
-      \midrule
+      \addlinespace
       \textbf{Insiemi} & $\{T_1, \ldots, T_n \mid X\}$ & $[T_1, \ldots, T_n \mid X]$ \\
       \textbf{Vincoli} & $T_1 = T_2$ & $eq(T_1, T_2)$ \\
       \textbf{Formule} & $T_1 \land \ldots \land T_n$ & $[T_1, \ldots, T_n]$ \\
-      \bottomrule
     \end{tabular}
-    \caption{Notazione per il linguaggio concreto di input}
   \end{table}
 \end{frame}
 
@@ -467,7 +438,7 @@ show(List) =>
 \begin{frame}
   \frametitle{Architettura del sistema}
   \begin{itemize}
-  \item Architettura a moduli
+  \item Architettura a moduli:
     \begin{itemize}
     \item solver.pi
     \item commands.pi
@@ -477,7 +448,7 @@ show(List) =>
     \item prompt.pi
     \item assert.pi
     \end{itemize}
-  \item Approccio OOP
+  \item Approccio OOP.
   \end{itemize}
 \end{frame}
 
@@ -486,10 +457,10 @@ show(List) =>
 \begin{frame}
   \frametitle{Il solver}
   \begin{itemize}
-  \item Implementa la procedura decisionale \satset{}
-  \item Se le soluzioni esistono, deve essere in grado di mostrarle tutte
-  \item Riscrive i vincoli fintanto che non è raggiunto il punto fisso
-  \item La formula finale ottenuta è \textbf{irriducibile}, \textbf{semplificata} ed \textbf{equivalente} alla formula orginale
+  \item Implementa la procedura decisionale \satset{}.
+  \item Se le soluzioni esistono, deve essere in grado di mostrarle tutte.
+  \item Riscrive i vincoli fintanto che non è raggiunto il punto fisso.
+  \item La formula finale ottenuta è \textbf{irriducibile}, \textbf{semplificata} ed \textbf{equivalente} alla formula originale.
   \end{itemize}
 \end{frame}
 
@@ -502,9 +473,9 @@ show(List) =>
   \begin{columns}[c]
     \column{0.4\textwidth}
     \begin{itemize}
-    \item Interfaccia del solver
-    \item Implementa il ciclo che riscrive la formula fino al punto fisso
-    \item Il predicato \texttt{sat/2} seleziona ed esegue le regole di riscrittura
+    \item Interfaccia del solver.
+    \item Implementa il ciclo che riscrive la formula fino al punto fisso.
+    \item Il predicato \texttt{sat/2} seleziona ed esegue le regole di riscrittura.
     \end{itemize}
 
     \column{0.5\textwidth}  
@@ -535,7 +506,7 @@ solve(C, CC) =>
 
 \begin{frame}[fragile]
   \frametitle{Implementazione regole di riscrittura} L'implementazione
-  in Picat è semplice e molto vicina alla descrizione matematica
+  in Picat è semplice e molto vicina alla descrizione matematica.
   \begin{columns}[c]
     \column{0.45\textwidth}
     \begin{exampleblock}{Esempio (Desc. matematica)}
@@ -576,7 +547,6 @@ log> solve
     \column{.45\textwidth}
     \textbf{API}
     \begin{exampleblock}{Esempio (API)}
-      Utilizzando il metodo \texttt{solve/2}
 \begin{verbatim}
 import solver.
 
@@ -615,10 +585,10 @@ my_predicate =>
 \begin{frame}
   \frametitle{Sviluppi futuri}
   \begin{itemize}
-  \item Aggiungere il supporto alla sintassi nativa di \lset{}
-  \item Estendere il supporto all'intero linguaggio \lset{} con funzioni parziali
+  \item Aggiungere il supporto alla sintassi nativa di \lset{}.
+  \item Estendere il supporto all'intero linguaggio \lset{} con funzioni parziali.
   \item Arricchire e perfezionare la batteria di test per aumentare la
-    qualità del codice prodotto
+    qualità del codice prodotto.
   \end{itemize}
 \end{frame}
 
