@@ -4,16 +4,20 @@ services: docker
 
 script:
   - docker pull dxjoke/tectonic-docker
-  - docker run --mount src=$TRAVIS_BUILD_DIR,target=/usr/src/tex,type=bind dxjoke/tectonic-docker /bin/sh -c "tectonic --reruns 0 presentation.tex;"
+  - docker run --mount src=$TRAVIS_BUILD_DIR,target=/usr/src/tex,type=bind dxjoke/tectonic-docker /bin/sh -c "tectonic --keep-intermediates --reruns 0 presentation.tex; tectonic --reruns 0 presentation.tex; tectonic --reruns 0 talk.tex;"
 
 after_success:
- - mv presentation.pdf presentation-${TRAVIS_TAG}.pdf
+  - mv presentation.pdf presentation-${TRAVIS_TAG}.pdf
+  - mv talk.pdf talk-${TRAVIS_TAG}.pdf
 
 deploy:
   provider: releases
-  file: $TRAVIS_BUILD_DIR/presentation-${TRAVIS_TAG}.pdf
+  api_key:
+    secure: rIO34YCzz3iHhCU6Fvx+WH2v71EiJPn6xYigde/L68kxU0qLJjFRSHXtRBz+U8YFVxj972tFzze93zQsFKJ7SPzBOfyRt7Fhs71WHwXr80vpOXxWqsYyQbywIeE37xdW/qg6UJvT1u6EWBn4NG44alwKsfTnnmyeZTdPWqk83O0qyQ0UpAz0svpB09nNCZf+1jAwKVsR0nQBNJe3A8gHZ7r5fECD2uohoAlngp9rhdjGWk6FFIjBjzYBefIqmdlpfxBIF4QP18T8Av8Mzf5dZNyPbK54PsMCTeEZvYdNY+5OgcwfTs2pgBDIS73X6zvS1q6PRMVHDcVGkJEzVAE/KAbwh/MzsJfjjpP5jorhKqBdHYuX9nvglyePSRW+VNZVbJU+0v6euMz4L7z8MEz9MDoyJXpBYETNRkw8sqlzL1tpgqaLsW/Bh3JJCCp2k8w+wzalz6eJn6YoA+mfj8NliA9ZRF67S8wS50Pkwi4EH8Mw/6NNx0352yAF4t+eAKNXjY9RNhJAMXMtjawHS8ugNigBJWuVaKuCx3s7rePzmQSPSpj9YC9yl2G3wUnG8g9quJdjQAl87Xc4uo/a/JoJXIBVmn2EZyI+xCFbrSGI+LN9D+jzzM/+EHZM74di57D3kfvnEJJEB/cMIEgLx0Zs8WGCNAcxfwFzyOUKAv7mbPk=
+  file:
+    - $TRAVIS_BUILD_DIR/presentation-${TRAVIS_TAG}.pdf
+    - $TRAVIS_BUILD_DIR/talk-${TRAVIS_TAG}.pdf
   skip_cleanup: true
   on:
     repo: lparolari/bachelor-thesis-presentation
     tags: true
-

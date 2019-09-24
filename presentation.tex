@@ -11,17 +11,32 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%----------------------------------------------------------------------------------------
-%	PACKAGES AND THEMES
-%----------------------------------------------------------------------------------------
-
 \documentclass{beamer}
 
-\mode<presentation> {
+%-------------------------------------------------------------------
+%	PACKAGES AND THEMES
+%-------------------------------------------------------------------
 
+%%% PACKAGES
+\usepackage[utf8]{inputenc}  % italian symbols.
+\usepackage[T1]{fontenc}     % define T1 charset for out files.
+\usepackage[italian]{babel}  % italian latex typo conventions.
+\usepackage{csquotes}        % needed by babel.
+\usepackage{amsmath}         % math features.
+\usepackage{amsthm}          % math theorems.
+\usepackage{amssymb}         % math symbols.
+\usepackage{graphicx}        % images managing.
+\usepackage{booktabs}        % Allows the use of \toprule, \midrule and \bottomrule in tables
+\usepackage{algorithm}       % algorithm block.
+\usepackage{algcompatible}
+\usepackage{algpseudocode}   % style for (autoimported) package algorithmicx.
+
+%%% MODE
+\mode<presentation> {
 % The Beamer class comes with a number of default slide themes
-% which change the colors and layouts of slides. Below this is a list
-% of all the themes, uncomment each in turn to see what they look like.
+% which change the colors and layouts of slides. Below this is a
+% list of all the themes, uncomment each in turn to see what they
+% look like.
 
 %\usetheme{default}
 %\usetheme{AnnArbor}
@@ -29,17 +44,17 @@
 %\usetheme{Bergen}        % commented left
 %\usetheme{Berkeley}      % menu left
 %\usetheme{Berlin}
-%\usetheme{Boadilla}      % very nice
-%\usetheme{CambridgeUS}
+%\usetheme{Boadilla}      % nice, no top menu
+%\usetheme{CambridgeUS}   % nice menu and footer
 %\usetheme{Copenhagen}
 %\usetheme{Darmstadt}
 %\usetheme{Dresden}
-%\usetheme{Frankfurt}     % NB
-%\usetheme{Goettingen}
-%\usetheme{Hannover}
-%\usetheme{Ilmenau}
-%\usetheme{JuanLesPins}
-%\usetheme{Luebeck}
+%\usetheme{Frankfurt}     % top bullets, no info below
+%\usetheme{Goettingen}    % no
+%\usetheme{Hannover}      % no
+%\usetheme{Ilmenau}       % not bad: bullets, sections, ... but too many rows
+%\usetheme{JuanLesPins}   % tree menu
+%\usetheme{Luebeck}       % very nice menu
 \usetheme{Madrid}        % default
 %\usetheme{Malmoe}
 %\usetheme{Marburg}
@@ -47,7 +62,7 @@
 %\usetheme{PaloAlto}
 %\usetheme{Pittsburgh}    % clean
 %\usetheme{Rochester}
-%\usetheme{Singapore}      % not bad, no info below
+%\usetheme{Singapore}     % not bad, no info below
 %\usetheme{Szeged}
 %\usetheme{Warsaw}
 
@@ -64,196 +79,525 @@
 %\usecolortheme{fly}           % horrible
 %\usecolortheme{lily}          % nice, clean blue
 %\usecolortheme{orchid}        % like default
-%\usecolortheme{rose}          % like default
+%\usecolortheme{rose}          % like default, very good
 %\usecolortheme{seagull}       % grey
 %\usecolortheme{seahorse}      % light lavanda
 %\usecolortheme{whale}         % like default
 %\usecolortheme{wolverine}     % yello blue
 
-%\setbeamertemplate{footline} % To remove the footer line in all slides uncomment this line
-%\setbeamertemplate{footline}[page number] % To replace the footer line in all slides with a simple slide count uncomment this line
+\usefonttheme{professionalfonts}
 
-%\setbeamertemplate{navigation symbols}{} % To remove the navigation symbols from the bottom of all slides uncomment this line
-}
+% To remove the footer line in all slides uncomment this line
+%\setbeamertemplate{footline}
 
-\usepackage{graphicx} % Allows including images
-\usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables
+% To replace the footer line in all slides with a simple slide 
+% count uncomment this line
+%\setbeamertemplate{footline}[page number]
 
-%----------------------------------------------------------------------------------------
+% To remove the navigation symbols from the bottom of all 
+% slides uncomment this line
+\setbeamertemplate{navigation symbols}{} 
+
+% blocks
+%\setbeamertemplate{blocks}[rounded][shadow=true]
+
+} % /mode<presentation>
+
+% top menu
+\useoutertheme[subsection=false]{miniframes}
+
+%\setbeamercolor{block title}{use=structure,fg=white,bg=blue!75!black}
+%\setbeamercolor{block body}{use=structure,fg=black,bg=white!20!white}
+
+% step by step
+\setbeamercovered{transparent}
+
+%%% CONFIGURATIONS
+\input{macros}
+
+
+%-------------------------------------------------------------------
 %	TITLE PAGE
-%----------------------------------------------------------------------------------------
+%-------------------------------------------------------------------
 
-\title[Short title]{Full Title of the Talk} % The short title appears at the bottom of every slide, the full title is only on the title page
+% The short title appears at the bottom of every slide, 
+% the full title is only on the title page
+\title[
+  \lset{} in Picat
+]{
+  Progettazione e implementazione
+  in Picat di un risolutore per vincoli insiemistici}
 
-\author{John Smith} % Your name
-\institute[UCLA] % Your institution as it will appear on the bottom of every slide, may be shorthand to save space
-{
-University of California \\ % Your institution for the title page
-\medskip
-\textit{john@smith.com} % Your email address
+\author[Luca \textsc{Parolari}]{
+  \textit{Candidato:} Luca Parolari \\
+  \textit{Relatore:} Gianfranco Rossi
 }
-\date{\today} % Date, can be changed to a custom date
+
+\institute[UNIPR]
+{
+  Università di Parma \\
+  Dipartimento di Scienze Matematiche, Fisiche e Informatiche \\
+  Corso di Laurea in Informatica
+}
+\date{26 settembre 2019}
+
+
 
 \begin{document}
 
-\begin{frame}
-\titlepage % Print the title page as the first slide
-\end{frame}
+%------------------------------------------------
 
 \begin{frame}
-\frametitle{Overview} % Table of contents slide, comment this block out to remove it
-\tableofcontents % Throughout your presentation, if you choose to use \section{} and \subsection{} commands, these will automatically be printed on this slide as an overview of your presentation
+  \titlepage
 \end{frame}
 
-%----------------------------------------------------------------------------------------
+%------------------------------------------------
+
+\begin{frame}
+  \frametitle{Panoramica della presentazione}
+  \tableofcontents
+\end{frame}
+
+%-------------------------------------------------------------------
 %	PRESENTATION SLIDES
-%----------------------------------------------------------------------------------------
+%-------------------------------------------------------------------
 
 %------------------------------------------------
-\section{First Section} % Sections can be created in order to organize your presentation into discrete blocks, all sections and subsections are automatically printed in the table of contents as an overview of the talk
+\section{\lset{}}
 %------------------------------------------------
-
-\subsection{Subsection Example} % A subsection can be created just before a set of slides with a common theme to further break down your presentation into chunks
 
 \begin{frame}
-\frametitle{Paragraphs of Text}
-Sed iaculis dapibus gravida. Morbi sed tortor erat, nec interdum arcu. Sed id lorem lectus. Quisque viverra augue id sem ornare non aliquam nibh tristique. Aenean in ligula nisl. Nulla sed tellus ipsum. Donec vestibulum ligula non lorem vulputate fermentum accumsan neque mollis.\\~\\
-
-Sed diam enim, sagittis nec condimentum sit amet, ullamcorper sit amet libero. Aliquam vel dui orci, a porta odio. Nullam id suscipit ipsum. Aenean lobortis commodo sem, ut commodo leo gravida vitae. Pellentesque vehicula ante iaculis arcu pretium rutrum eget sit amet purus. Integer ornare nulla quis neque ultrices lobortis. Vestibulum ultrices tincidunt libero, quis commodo erat ullamcorper id.
+  \frametitle{Il linguaggio \lset{}}
+  \begin{block}{Definizione (\lset{})}
+    \lset{} è un linguaggio basato su vincoli per esprimere e
+    risolvere formule del primo ordine sull'universo degli insiemi
+    finiti.
+  \end{block}
+  \begin{itemize}
+  	\item Insiemi molto generali: \emph{untyped hereditarily finite hybrid sets}.
+  	\item Manipolazione tramite usuali operatori su insiemi.
+  \end{itemize}
 \end{frame}
 
 %------------------------------------------------
 
 \begin{frame}
-\frametitle{Bullet Points}
-\begin{itemize}
-\item Lorem ipsum dolor sit amet, consectetur adipiscing elit
-\item Aliquam blandit faucibus nisi, sit amet dapibus enim tempus eu
-\item Nulla commodo, erat quis gravida posuere, elit lacus lobortis est, quis porttitor odio mauris at libero
-\item Nam cursus est eget velit posuere pellentesque
-\item Vestibulum faucibus velit a augue condimentum quis convallis nulla gravida
-\end{itemize}
+  \frametitle{Sintassi}
+  \begin{block}{Sintassi}
+    Insiemi di simboli costituenti di \lset{}:
+    \begin{itemize}
+    \item $\calF$, insieme di costanti e simboli di funzione, tra cui $\emptyset$ e $\{ \cdot, \cdot \}$;
+    \item $\prod_C = \{ =, in, un, disj, set \}$;
+    \item $\calV$, insieme numerabile di variabili.
+    \end{itemize}
+  \end{block}
+  \medskip
+  \textbf{Esempi}
+  \begin{itemize}
+  \item $1$, $a$, $f(\ldots)$, $\{1|\{2|\emptyset\}\} \equiv \{1,2\}$ etc.
+  \item $X = 5$, $un(\{7\}, \emptyset, S)$\footnote{La semantica di $un(A,B,S)$ è $S = A \cup B $}, etc.
+  \item $(X\ in\ S \land X\ neq\ 1) \lor (X\ nin\ S \land X = 1)$, etc.
+  \end{itemize}
 \end{frame}
 
 %------------------------------------------------
 
 \begin{frame}
-\frametitle{Blocks of Highlighted Text}
-\begin{block}{Block 1}
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer lectus nisl, ultricies in feugiat rutrum, porttitor sit amet augue. Aliquam ut tortor mauris. Sed volutpat ante purus, quis accumsan dolor.
-\end{block}
+  \frametitle{Il solver \satset{}}
+  \begin{columns}[c]
 
-\begin{block}{Block 2}
-Pellentesque sed tellus purus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Vestibulum quis magna at risus dictum tempor eu vitae velit.
-\end{block}
+    \column{.45\textwidth} % Left column and width
+    \begin{itemize}
+    \item La procedura \satset{} è la procedura di decisione per i
+      vincoli.
+    \item \satset{} utilizza riscritture sintattiche per risolvere le
+      formule.
+    \end{itemize}
 
-\begin{block}{Block 3}
-Suspendisse tincidunt sagittis gravida. Curabitur condimentum, enim sed venenatis rutrum, ipsum neque consectetur orci, sed blandit justo nisi ac lacus.
-\end{block}
+    \column{.5\textwidth} % Right column and width
+    \begin{exampleblock}{Esempio (Formula insoddisfacibile)}
+      $X = \{\} \land X\ neq\ \{\}$
+      
+      Nessuna soluzione.
+    \end{exampleblock}
+    \begin{exampleblock}{Esempio (Formula soddisfacibile)}
+      $1\ nin\ \{A, B\}$
+      
+      Una soluzione: $A \neq 1 \land B \neq 1$
+    \end{exampleblock}
+  \end{columns}
 \end{frame}
 
+%------------------------------------------------
+\section{Picat}
 %------------------------------------------------
 
 \begin{frame}
-\frametitle{Multiple Columns}
-\begin{columns}[c] % The "c" option specifies centered vertical alignment while the "t" option is used for top vertical alignment
+  \frametitle{Il linguaggio Picat}
+  \begin{block}{Picat}
+    Picat è un linguaggio di programmazione multiparadigma basato
+    sulla logica dei predicati del primo ordine per applicazioni
+    \emph{general-purpose}.
+  \end{block}
 
-\column{.45\textwidth} % Left column and width
-\textbf{Heading}
-\begin{enumerate}
-\item Statement
-\item Explanation
-\item Example
-\end{enumerate}
+  \medskip
 
-\column{.5\textwidth} % Right column and width
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer lectus nisl, ultricies in feugiat rutrum, porttitor sit amet augue. Aliquam ut tortor mauris. Sed volutpat ante purus, quis accumsan dolor.
-
-\end{columns}
+  \textbf{Autori}: Neng-Fa Zhou e Jonathan Fruhman.
+  
+  \textbf{Stato dell'arte}:
+  \begin{itemize}
+  \item Inizio dello sviluppo a \emph{maggio 2013}.
+  \item Rilascio della prima versione stabile 1.0 ad \emph{aprile
+    2015}.
+  \item Rilascio della versione 2.0 nel \emph{novembre 2017}.
+  \item Ultima versione 2.6\#2 rilasciata a \emph{marzo 2019}.
+  \end{itemize}
 \end{frame}
-
-%------------------------------------------------
-\section{Second Section}
-%------------------------------------------------
 
 \begin{frame}
-\frametitle{Table}
-\begin{table}
-\begin{tabular}{l l l}
-\toprule
-\textbf{Treatments} & \textbf{Response 1} & \textbf{Response 2}\\
-\midrule
-Treatment 1 & 0.0003262 & 0.562 \\
-Treatment 2 & 0.0015681 & 0.910 \\
-Treatment 3 & 0.0009271 & 0.296 \\
-\bottomrule
-\end{tabular}
-\caption{Table caption}
-\end{table}
+  \frametitle{Il linguaggio Picat} \framesubtitle{Caratteristiche
+    principali}
+  \begin{itemize}
+  \item \textbf{P}attern-matching, predicati e funzioni sono definiti
+    tramite pattern-matching.
+  \item \textbf{I}ntuitive, sono forniti comandi utilizzati nei comuni
+    linguaggi imperativi.
+  \item \textbf{C}onstraints, la programmazione con vincoli è
+    supportata nativamente.
+  \item \textbf{A}ctors, viene fornito il supporto per attori
+    event-driven.
+  \item \textbf{T}abling, viene fornito un sistema di caching per la
+    memorizzazione di risultati parziali.
+  \end{itemize}
 \end{frame}
 
 %------------------------------------------------
 
-\begin{frame}
-\frametitle{Theorem}
-\begin{theorem}[Mass--energy equivalence]
-$E = mc^2$
-\end{theorem}
-\end{frame}
-
-%------------------------------------------------
-
-\begin{frame}[fragile] % Need to use the fragile option when verbatim is used in the slide
-\frametitle{Verbatim}
-\begin{example}[Theorem Slide Code]
+\begin{frame}[fragile]
+  \frametitle{Esempi (1/2)}
+  \framesubtitle{Approccio logic programming}
+  \begin{exampleblock}{Esempio (Successione di Fibonacci)}
 \begin{verbatim}
+fib(0,F) => F=0.
+fib(1,F) => F=1.
+fib(N,F),N>1 => fib(N-1,F1), fib(N-2,F2), F=F1+F2.
+fib(N,F) => throw $error(wrong_argument,fib,N).
+\end{verbatim}
+  \end{exampleblock}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}[fragile]
+  \frametitle{Esempi (2/2)}
+  \framesubtitle{Approccio imperative programming}
+  \begin{exampleblock}{Esempio (Successione di Fibonacci)}
+\begin{verbatim}
+fib(N) = F =>
+    if (N = 0) then
+        F = 0
+    elseif (N = 1) then
+        F = 1
+    elseif N > 1 then
+        F = fib(N-1) + fib(N-2)
+    else 
+        throw $error(wrong_argument,fib,N)
+    end.
+\end{verbatim}
+  \end{exampleblock}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}[fragile]
+  \frametitle{Picat vs. Prolog}
+  \begin{table}
+    \begin{tabular}{l l l}
+      & \textbf{Prolog} & \textbf{Picat} \\
+      \addlinespace
+      \textbf{Predicati dinamici} & Sì & No \\
+      \textbf{Operatori definiti da utente} & Sì & No \\
+      \textbf{Selezione regole applicabili} & Unificazione & Pattern-matching \\
+      \textbf{Backtracking} & Sì (default) & Sì \\
+      \textbf{Comandi/costrutti di controllo} & No & Si
+    \end{tabular}
+  \end{table}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}[fragile]
+  \frametitle{Unificazione e pattern-matching}
+  
+  Il predicato \texttt{p(X, X)} ha comportamenti diversi in Prolog e
+  Picat.
+  \begin{columns}[c]
+    
+    \column{0.45\textwidth}
+    \begin{exampleblock}{Esempio (Unificazione)}
+\begin{verbatim}
+% Prolog
+p(X, X) :- true.
+
+?- p(1, 1).
+true
+?- p(1, Z).
+Z = 1
+\end{verbatim}
+    \end{exampleblock}
+    
+    \column{0.45\textwidth}
+    \begin{exampleblock}{Esempio (Pattern-matching)}
+\begin{verbatim}
+% Picat
+p(X, X) => true.
+
+> p(1, 1).
+true
+> p(1, Z).
+false
+\end{verbatim}
+    \end{exampleblock}
+  \end{columns}
+
+  \medskip
+
+  In Picat per avere lo stesso comportamento del Prolog bisogna
+  scrivere \texttt{p(X, Y) => X = Y}, forzando l'unificazione.
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}[fragile]
+  \frametitle{Backtracking}
+  
+  \begin{exampleblock}{Esempio (Gestione backtracking)}
+\begin{verbatim}
+% Prolog 
+member(X,[X|_]).
+member(X,[_|T]) :- member(X,T).
+
+% Picat
+member(X,[Y|_]) ?=> X = Y.
+member(X,[_|T]) => member(X,T).
+\end{verbatim}
+  \end{exampleblock}
+
+  \begin{itemize}
+  \item In Picat è necessario indicare esplicitamente una regola
+    \emph{backtrackable}.
+  \item Una regola \emph{non-backtrackable} in Picat è come una regola
+    Prolog seguita da \emph{cut} (!).
+  \end{itemize}
+  
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}[fragile]
+  \frametitle{Costrutti} 
+  Picat fornisce numerosi costrutti di controllo (\texttt{foreach}, \texttt{while}, \texttt{if-then-else}, etc.), funzioni e predicati \emph{built-in} e l'assegnamento (\texttt{:=}).
+  \begin{exampleblock}{Esempio (Costrutti)}
+\begin{verbatim}
+show(List) =>
+    I = 1,
+    foreach(X in List)
+        printf("%s: %s%n", 
+               I.to_string(), 
+               X.to_string()),
+        I := I + 1
+    end.
+\end{verbatim}
+  \end{exampleblock}
+\end{frame}
+
+
+%------------------------------------------------
+\section{\lset{} in Picat}
+%------------------------------------------------
+
 \begin{frame}
-\frametitle{Theorem}
-\begin{theorem}[Mass--energy equivalence]
-$E = mc^2$
-\end{theorem}
-\end{frame}\end{verbatim}
-\end{example}
+  \frametitle{\lset{} in Picat}
+  \framesubtitle{Linguaggio concreto di input per il solver}
+  \begin{itemize}
+  \item Adozione di una sintassi semplificata per il linguaggio di input.
+  \end{itemize}
+  \begin{table}
+    \begin{tabular}{l l l}
+      & \textbf{\lset{}} & \textbf{Impl. Picat}\\
+      \addlinespace
+      \textbf{Insiemi} & $\{T_1, \ldots, T_n \mid X\}$ & $[T_1, \ldots, T_n \mid X]$ \\
+      \textbf{Vincoli} & $T_1 = T_2$ & $eq(T_1, T_2)$ \\
+      \textbf{Formule} & $T_1 \land \ldots \land T_n$ & $[T_1, \ldots, T_n]$ \\
+    \end{tabular}
+  \end{table}
 \end{frame}
 
 %------------------------------------------------
 
 \begin{frame}
-\frametitle{Figure}
-Uncomment the code on this slide to include your own image from the same directory as the template .TeX file.
-%\begin{figure}
-%\includegraphics[width=0.8\linewidth]{test}
-%\end{figure}
-\end{frame}
-
-%------------------------------------------------
-
-\begin{frame}[fragile] % Need to use the fragile option when verbatim is used in the slide
-\frametitle{Citation}
-An example of the \verb|\cite| command to cite within the presentation:\\~
-
-This statement requires citation \cite{p1}.
-\end{frame}
-
-%------------------------------------------------
-
-\begin{frame}
-\frametitle{References}
-\footnotesize{
-\begin{thebibliography}{99} % Beamer does not support BibTeX so references must be inserted manually as below
-\bibitem[Smith, 2012]{p1} John Smith (2012)
-\newblock Title of the publication
-\newblock \emph{Journal Name} 12(3), 45 -- 678.
-\end{thebibliography}
-}
+  \frametitle{Architettura del sistema}
+  \begin{itemize}
+  \item Architettura a moduli:
+    \begin{itemize}
+    \item solver.pi
+    \item commands.pi
+    \item lset.pi
+    \item global.pi
+    \item log\textunderscore h.pi
+    \item prompt.pi
+    \item assert.pi
+    \end{itemize}
+  \item Approccio OOP.
+  \end{itemize}
 \end{frame}
 
 %------------------------------------------------
 
 \begin{frame}
-\Huge{\centerline{The End}}
+  \frametitle{Il solver}
+  \begin{itemize}
+  \item Implementa la procedura decisionale \satset{}.
+  \item Se le soluzioni esistono, deve essere in grado di mostrarle tutte.
+  \item Riscrive i vincoli fintanto che non è raggiunto il punto fisso.
+  \item La formula finale ottenuta è \textbf{irriducibile}, \textbf{semplificata} ed \textbf{equivalente} alla formula originale.
+  \end{itemize}
 \end{frame}
 
-%----------------------------------------------------------------------------------------
+%------------------------------------------------
 
-\end{document} 
+\begin{frame}[fragile]
+  \frametitle{Il solver}
+  \framesubtitle{Il predicato solve/2}
+  
+  \begin{columns}[c]
+    \column{0.4\textwidth}
+    \begin{itemize}
+    \item Interfaccia del solver.
+    \item Implementa il ciclo che riscrive la formula fino al punto fisso.
+    \item Il predicato \texttt{sat/2} seleziona ed esegue le regole di riscrittura.
+    \end{itemize}
+
+    \column{0.5\textwidth}  
+    \begin{exampleblock}{Esempio (Predicato solve/2)}
+\begin{verbatim}
+solve(C, CC) =>
+    CN = [],
+    foreach (T in C)
+        sat(T, C1),
+        CN := CN ++ C1,
+    end,
+    CN := CN.flatten(),
+    
+    if C == CN
+    then CC = CN
+    else solve(CN, CC)
+    end.
+\end{verbatim}
+    \end{exampleblock}	
+  \end{columns}
+\end{frame}
+
+%------------------------------------------------
+\section{Implementazione}
+%------------------------------------------------
+
+%------------------------------------------------
+
+\begin{frame}[fragile]
+  \frametitle{Implementazione regole di riscrittura} L'implementazione
+  in Picat è semplice e molto vicina alla descrizione matematica.
+  \begin{columns}[c]
+    \column{0.45\textwidth}
+    \begin{exampleblock}{Esempio (Desc. matematica)}
+      Regola $=_2$:
+      \[
+      \text{Se }t \not\in \calV, t = \dotx \to \dotx = t
+      \]
+    \end{exampleblock}
+    
+    \column{0.45\textwidth}
+    \begin{exampleblock}{Esempio (Implementazione)}
+\begin{verbatim}
+eq(T, X, R), 
+        nonvar(T),
+        var(X) =>      % 2
+    R = [ $eq(X, T) ].
+\end{verbatim}
+    \end{exampleblock}
+  \end{columns}
+\end{frame}
+
+%------------------------------------------------
+\section{Uso del solver}
+%------------------------------------------------
+
+\begin{frame}[fragile]
+  \frametitle{Uso del solver}
+  \begin{columns}[c]
+    \column{.45\textwidth}
+    \textbf{Modalità interattiva}
+    \begin{exampleblock}{Esempio (Interprete)}
+\begin{verbatim}
+log> solve 
+[eq(X,1), neq(X,1)]
+\end{verbatim}
+    \end{exampleblock}
+
+    \column{.45\textwidth}
+    \textbf{API}
+    \begin{exampleblock}{Esempio (API)}
+\begin{verbatim}
+import solver.
+
+my_predicate =>
+    Formula = [ 
+        $eq(X,1), 
+        $neq(X,1) 
+    ],
+    solve(Formula, Result),
+    println(Result).
+\end{verbatim}
+    \end{exampleblock}
+  \end{columns}
+\end{frame}
+
+%------------------------------------------------
+\section{Conclusione e sviluppi futuri}
+%------------------------------------------------
+
+\begin{frame}
+  \frametitle{Conclusioni} Il risultato principale di questo lavoro di
+  tesi è stata la progettazione ed implementazione in Picat di un
+  constraint solver per formule insiemistiche.
+  
+  \bigskip
+  
+  Per farlo, è stato necessario:
+  \begin{itemize}
+  \item sperimentare e capire Picat;
+  \item progettare ed implementare il risolutore di formule stesso.
+  \end{itemize}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+  \frametitle{Sviluppi futuri}
+  \begin{itemize}
+  \item Aggiungere il supporto alla sintassi nativa di \lset{}.
+  \item Estendere il supporto all'intero linguaggio \lset{} con funzioni parziali.
+  \item Arricchire e perfezionare la batteria di test per aumentare la
+    qualità del codice prodotto.
+  \end{itemize}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+  \Huge{\centerline{Grazie per l'attenzione}}
+\end{frame}
+
+%-------------------------------------------------------------------
+
+\end{document}
