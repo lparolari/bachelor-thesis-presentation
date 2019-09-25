@@ -25,7 +25,8 @@ You can find releases history
 
 ## Usage
 
-You can download the source code to your local machine with
+You can **download the source** code to your local machine with the
+following commands.
 ```bash
 # download it
 git clone https://github.com/lparolari/bachelor-thesis-presentation.git
@@ -34,14 +35,24 @@ cd bachelor-thesis-presentation
 rm -rf .git
 ```
 
-To compile the sources
+In order to **compile the sources** you can use the `Makefile` with
+the following commands.
 ```bash
-pdflatex thesis.tex
+make slides1    # compiles the sldies with pdflatex
+make slides2    # compiles the slides with docker
+make talk1      # compiles the talk with pdflatex
+make talk2      # compiles the talk with docker
+```
 
-# or, with docker
-docker pull dxjoke/tectonic-docker
-export SRC_DIR=/path/to/bachelor-thesis-presentation
-docker run --mount src=$SRC_DIR,target=/usr/src/tex,type=bind dxjoke/tectonic-docker /bin/sh -c "tectonic --reruns 0 presentation.tex;
+The following shortcut are available:
+```bash
+make slides     # equivalent to `make slides1` 
+make talk       # equivalent to `make talk1`
+```
+
+You can read compile sources with:
+```bash
+make read
 ```
 
 ## Author
@@ -50,5 +61,6 @@ docker run --mount src=$SRC_DIR,target=/usr/src/tex,type=bind dxjoke/tectonic-do
 ## Acknowledgments
 
 - My tutor, for the support :heart:
-- [unipr semantics repository](https://github.com/UNIPR-Semantica-2016-2017/Appunti), for some latex tips and document structure
+- [unipr semantics repository](https://github.com/UNIPR-Semantica-2016-2017/Appunti),
+  for some latex tips and document structure
 
